@@ -34,7 +34,7 @@ export class XterioAuth {
     }
 
     try {
-      const { aud, exp = 0, sub } = JSON.parse(decode(payload)) as Payload
+      const { aud, exp = 0 } = JSON.parse(decode(payload)) as Payload
       XterioAuth.setTokenTimer((exp - 60) * 1000 - Date.now())
       const isExpire = !aud || Date.now() > (exp - 60) * 1000
       return !isExpire
