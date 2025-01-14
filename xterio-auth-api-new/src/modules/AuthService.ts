@@ -13,9 +13,9 @@ import type {
 } from '../interfaces/loginInfo'
 import { XLog, XTERIO_EVENTS } from '../utils'
 import { getFetcher, postFetcher } from '../utils/fetchers'
+import { XterioAuth } from './XterAuth'
 import { XterioAuthInfo, XterioAuthTokensManager, XterioAuthUserInfoManager } from './XterAuthInfo'
 import { XterEventEmiter } from './XterEventEmitter'
-import { XterioAuth } from './XterAuth'
 
 export class XterioAuthService {
   /**
@@ -34,11 +34,11 @@ export class XterioAuthService {
     })
       .then(async (res) => {
         XLog.info('login success.')
-        await XterioAuthTokensManager.setTokens(res)
+        XterioAuthTokensManager.setTokens(res)
         XterioAuth.setIsLogin(true)
         return res
       })
-      .catch((err) => {
+      .catch(() => {
         XLog.error('login failed.')
         return null
       })
@@ -62,7 +62,7 @@ export class XterioAuthService {
       ...profileInfo,
       wallet
     }
-    await XterioAuthUserInfoManager.setUserInfo(res)
+    XterioAuthUserInfoManager.setUserInfo(res)
     if (res?.uuid) {
       XterEventEmiter.emit(XTERIO_EVENTS.ACCOUNT, res)
     }
@@ -75,7 +75,7 @@ export class XterioAuthService {
         XLog.info('get profile success.')
         return res
       })
-      .catch((err) => {
+      .catch(() => {
         XLog.error('get profile failed.')
         return null
       })
@@ -89,7 +89,7 @@ export class XterioAuthService {
         XLog.info('get wallet success.')
         return res
       })
-      .catch((err) => {
+      .catch(() => {
         XLog.error('get wallet failed.')
         return null
       })
@@ -115,7 +115,7 @@ export class XterioAuthService {
     })
     XLog.info('ttl login', res?.error ? 'failed' : 'success')
     if (!res?.error) {
-      await XterioAuthTokensManager.setTokens(res)
+      XterioAuthTokensManager.setTokens(res)
       XterioAuth.setIsLogin(true)
     }
     return res?.error ? { ...res, error: true } : { ...res, error: false }
@@ -183,7 +183,7 @@ export class XterioAuthService {
       } as ILoginServiceResError
     })
     if (!res?.error) {
-      await XterioAuthTokensManager.setTokens(res)
+      XterioAuthTokensManager.setTokens(res)
       XterioAuth.setIsLogin(true)
     }
     return res?.error ? res : { ...res, error: false }

@@ -1,24 +1,60 @@
 #import "RnAuth.h"
+#import <AuthenticationServices/AuthenticationServices.h>
 
-@interface RnAuth ()
+static NSString *const RCTNativeLocalStorageKey = @"local-storage";
+
+@interface RnAuth ()<ASWebAuthenticationPresentationContextProviding>
+
+@property (strong, nonatomic) NSUserDefaults *localStorage;
 
 @end
 
 @implementation RnAuth
-RCT_EXPORT_MODULE()
 
-- (NSNumber *)multiply:(double)a b:(double)b {
-    NSNumber *result = @(a * b);
+RCT_EXPORT_MODULE(NativeRnAuth)
 
-    return result;
+- (id) init {
+  if (self = [super init]) {
+    _localStorage = [[NSUserDefaults alloc] initWithSuiteName:RCTNativeLocalStorageKey];
+  }
+  return self;
 }
-- (NSNumber *)test:(double)a b:(double)b {
-    NSNumber *result = @(a * b);
-    NSLog(@"哈哈哈");
-    return result;
+- (NSString * _Nullable)getItem:(NSString *)key {
+  return [self.localStorage stringForKey:key];
 }
-- (void)login:(NSString *)url {
-//   NSURL *authURL = [NSURL URLWithString:url];
+- (void)setItem:(NSString *)key value:(NSString *)value {
+  [self.localStorage setObject:value forKey:key];
+}
+- (void)removeItem:(NSString *)key {
+  [self.localStorage removeObjectForKey:key];
+}
+- (void)clear {
+  NSDictionary *keys = [self.localStorage dictionaryRepresentation];
+  for (NSString *key in keys) {
+    [self removeItem:key];
+  }
+}
+
+- (void)login:(NSString *)url  {
+  NSURL *authURL = [NSURL URLWithString:url];
+  NSString *scheme = @"xterio-rn";
+  
+  ASWebAuthenticationSession *session = [[ASWebAuthenticationSession alloc] initWithURL:authURL
+                                                                 callbackURLScheme:scheme
+                                                                      completionHandler:^(NSURL *callbackURL, NSError *error) {
+    if (error != nil) {
+      NSLog(@"[XterioAuth] Open url error");
+    }else{
+      NSLog(@"[XterioAuth] Authenticated successfully: %@ %@", callbackURL, callbackURL.absoluteString);
+    }
+  }];
+  session.presentationContextProvider = self;
+  if(session.canStart){
+    [session start];
+  }else{
+    NSLog(@"[XterioAuth] Can not open url");
+  }
+
 //   ASWebAuthenticationSession *authSession = [[ASWebAuthenticationSession alloc] initWithURL:authURL
 //                                                                            callbackURLScheme:@"xterio-rn"
 //                                                                            completionHandler:^(NSURL *callbackURL, NSError *error) {
@@ -41,9 +77,18 @@ RCT_EXPORT_MODULE()
 // //    reject(@"Error", @"Can not open url", error);
 //   }
 }
-//- (ASPresentationAnchor)presentationAnchorForWebAuthenticationSession:(ASWebAuthenticationSession *)session{
-//  return [[UIApplication sharedApplication].delegate window];
-//}
+- (ASPresentationAnchor)presentationAnchorForWebAuthenticationSession:(ASWebAuthenticationSession *)session{
+  __block ASPresentationAnchor anchor;
+  dispatch_sync(dispatch_get_main_queue(), ^{
+    anchor = [[UIApplication sharedApplication].delegate window];
+  });
+  return anchor;
+}
+
+- (NSNumber *)multiply:(double)a b:(double)b {
+    NSNumber *result = @(a * b);
+    return result;
+}
 
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params

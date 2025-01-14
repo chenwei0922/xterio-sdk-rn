@@ -63,6 +63,11 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "dependencies": {
+    "js-base64": "^3.7.7",
+    "query-string": "^9.1.1",
+    "react-native-webview": "^13.13.1"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.5.0",
@@ -132,30 +137,13 @@
       "prettier"
     ],
     "rules": {
-      "react/react-in-jsx-scope": "off",
-      "prettier/prettier": [
-        "error",
-        {
-          "quoteProps": "consistent",
-          "singleQuote": true,
-          "tabWidth": 2,
-          "trailingComma": "es5",
-          "useTabs": false
-        }
-      ]
+      "react/react-in-jsx-scope": "off"
     }
   },
   "eslintIgnore": [
     "node_modules/",
     "lib/"
   ],
-  "prettier": {
-    "quoteProps": "consistent",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
-  },
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
@@ -199,11 +187,5 @@
     "type": "turbo-module",
     "languages": "kotlin-objc",
     "version": "0.45.5"
-  },
-  "dependencies": {
-    "@react-native-async-storage/async-storage": "^2.1.0",
-    "js-base64": "^3.7.7",
-    "query-string": "^9.1.1",
-    "react-native-webview": "^13.12.5"
   }
 }

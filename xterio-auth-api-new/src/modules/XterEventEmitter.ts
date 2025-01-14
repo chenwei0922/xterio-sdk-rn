@@ -1,4 +1,4 @@
-import { XLog, XTERIO_EVENTS } from "@/utils"
+import { XLog, XTERIO_EVENTS } from '../utils'
 
 type Func = (...args: any) => void | unknown
 

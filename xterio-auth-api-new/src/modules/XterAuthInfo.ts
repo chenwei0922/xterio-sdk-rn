@@ -1,6 +1,14 @@
-import { LoginMethodType, type Env, type ISSoTokensParams, type ITokenRes, type IUserInfo, type LoginType, type PageUriMapType } from "@/interfaces/loginInfo"
-import { XTERIO_CONST } from "@/utils"
-import { XterioCache } from "./XterCache"
+import {
+  LoginMethodType,
+  type Env,
+  type ISSoTokensParams,
+  type ITokenRes,
+  type IUserInfo,
+  type LoginType,
+  type PageUriMapType
+} from '../interfaces/loginInfo'
+import { XTERIO_CONST } from '../utils'
+import { XterioCache } from './XterCache'
 
 export class XterioAuthInfo {
   /** client id */
@@ -21,11 +29,7 @@ export class XterioAuthInfo {
   static tokens?: ITokenRes
   /** user account */
   static userInfo?: IUserInfo
-  /** account callback function */
-  static onAccount: ((p: IUserInfo) => void)[] = []
-  /** login way */
-  static loginType?: LoginType
-  /** otac(2m expired) */
+  /** otac(2m or used expired) */
   static otac?: string
   /** page uri map */
   static pageUriMap: PageUriMapType
@@ -33,30 +37,32 @@ export class XterioAuthInfo {
   static PageUriApi: string
 
   /** record logined ui type */
-  static async setLoginType(_type: string){
-    await XterioCache.set(XTERIO_CONST.LOGIN_TYPE, _type)
+  private static _loginType: LoginType = XterioCache.get(XTERIO_CONST.LOGIN_TYPE) as LoginType
+  static set loginType(_type: LoginType) {
+    this._loginType = _type
+    XterioCache.set(XTERIO_CONST.LOGIN_TYPE, _type)
   }
-  static async getLoginType() {
-    const _type = (await XterioCache.get(XTERIO_CONST.LOGIN_TYPE)) as LoginType
-    return _type ? _type : undefined
+  static get loginType() {
+    return this._loginType
   }
 
   /** record logined way */
-  static async setLoginMethod(val: LoginMethodType) {
-    await XterioCache.set(XTERIO_CONST.LOGIN_METHOD, val)
+  private static _loginMethod: LoginMethodType = XterioCache.get(XTERIO_CONST.LOGIN_METHOD) as LoginMethodType
+  static set loginMethod(val: LoginMethodType) {
+    this._loginMethod = val
+    XterioCache.set(XTERIO_CONST.LOGIN_METHOD, val)
   }
-  static async getLoginMethod() {
-    const _loginMethod = (await XterioCache.get(XTERIO_CONST.LOGIN_METHOD)) as LoginMethodType
-    return _loginMethod
+  static get loginMethod() {
+    return this._loginMethod
   }
 
   /** record logined wallet address */
-  static async setLoginWallet(val: string) {
-    await XterioCache.set(XTERIO_CONST.LOGIN_WALLET_ADDRESS, val)
+  private static _loginWalletAddress: string = XterioCache.get(XTERIO_CONST.LOGIN_WALLET_ADDRESS)
+  static set loginWallet(val: string) {
+    this._loginWalletAddress = val
+    XterioCache.set(XTERIO_CONST.LOGIN_WALLET_ADDRESS, val)
   }
-  static async getLoginWallet() {
-    const _loginMethod = await this.getLoginMethod()
-    const _loginWalletAddress = await XterioCache.get(XTERIO_CONST.LOGIN_WALLET_ADDRESS)
+  static get loginWallet() {
     if (
       [
         LoginMethodType.METAMASK,
@@ -65,28 +71,28 @@ export class XterioAuthInfo {
         LoginMethodType.TRUST,
         LoginMethodType.SAFEPAL,
         LoginMethodType.BINANCE
-      ].includes(_loginMethod)
+      ].includes(this.loginMethod)
     ) {
-      return _loginWalletAddress
+      return this._loginWalletAddress
     }
     return ''
   }
 }
 
 export class XterioAuthTokensManager {
-  static async setTokens(value: Partial<ITokenRes>) {
+  static setTokens(value: Partial<ITokenRes>) {
     const { id_token = '', access_token = '', refresh_token = '' } = value || {}
     XterioAuthInfo.tokens = { id_token, access_token, refresh_token }
-    await XterioCache.setTokens(value)
+    XterioCache.setTokens(value)
   }
-  static async removeTokens() {
+  static removeTokens() {
     XterioAuthInfo.tokens = undefined
-    await XterioCache.deleteTokens()
+    XterioCache.deleteTokens()
   }
-  static async removeIdToken() {
+  static removeIdToken() {
     const { refresh_token = '', access_token = '' } = XterioAuthInfo.tokens || {}
     XterioAuthInfo.tokens = { refresh_token, access_token, id_token: '' }
-    await XterioCache.deleteTokens(XTERIO_CONST.ID_TOKEN)
+    XterioCache.deleteTokens(XTERIO_CONST.ID_TOKEN)
   }
   static get idToken() {
     return XterioAuthInfo.tokens?.id_token || ''
@@ -100,13 +106,13 @@ export class XterioAuthTokensManager {
 }
 
 export class XterioAuthUserInfoManager {
-  static async setUserInfo(value: IUserInfo) {
+  static setUserInfo(value: IUserInfo) {
     XterioAuthInfo.userInfo = value
-    await XterioCache.setUserInfo(value)
+    XterioCache.setUserInfo(value)
   }
-  static async removeUserInfo() {
+  static removeUserInfo() {
     XterioAuthInfo.userInfo = undefined
-    await XterioCache.deleteUserInfo()
+    XterioCache.deleteUserInfo()
   }
   static get userInfo() {
     return XterioAuthInfo.userInfo

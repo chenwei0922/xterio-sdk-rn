@@ -9,15 +9,9 @@ interface IXWebviewProps extends WebViewProps {
   innerRef?: React.RefObject<any>
 }
 
-const XWebView = ({ url = '', showLoading = true, style, innerRef, ...attributes }: IXWebviewProps) => {
+const XWebView = ({ url = '', showLoading = true, style, ...attributes }: IXWebviewProps) => {
   const [loading, setLoading] = useState(showLoading)
 
-  return (
-    <WebView
-      style={[{backgroundColor: 'red', flex:1}, style]}
-      source={{ uri: url }}
-      {...attributes}
-    />
-  )
+  return <WebView style={[{ backgroundColor: 'red', flex: 1 }, style]} source={{ uri: url }} {...attributes} />
 }
 export default XWebView

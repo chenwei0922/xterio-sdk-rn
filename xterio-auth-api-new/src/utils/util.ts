@@ -1,4 +1,4 @@
-import type { ParsedQuery } from "query-string"
+import type { ParsedQuery } from 'query-string'
 
 export const randomId = (): number => {
   const date = Date.now() * Math.pow(10, 3)

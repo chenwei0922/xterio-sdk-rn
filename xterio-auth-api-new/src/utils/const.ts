@@ -1,4 +1,4 @@
-import { Env } from "../interfaces/loginInfo"
+import { Env } from '../interfaces/loginInfo'
 
 type EnvVariableType = {
   HCAPTCHA_SITE_KEY: string

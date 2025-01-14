@@ -1,15 +1,15 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import NativeRnAuth from '../NativeRnAuth'
 
 export class Storage {
-  static async setItem<T,>(key:string, value:T){
+  static setItem<T>(key: string, value: T) {
     try {
       const val: string = typeof value === 'string' ? value : JSON.stringify(value)
-      await AsyncStorage.setItem(key, val)
+      NativeRnAuth?.setItem(key, val)
     } catch (e) {}
   }
-  static async getItem<T = string>(key: string): Promise<T | undefined | null> {
+  static getItem<T = string>(key: string): T | null {
     try {
-      let value = await AsyncStorage.getItem(key)
+      let value = NativeRnAuth?.getItem(key)
       if (value !== null) {
         try {
           value = JSON.parse(value)
@@ -21,15 +21,10 @@ export class Storage {
       return null
     }
   }
-  static async removeItem(key: string) {
-    try {
-      await AsyncStorage.removeItem(key)
-    } catch (e) {}
+  static removeItem(key: string) {
+    NativeRnAuth?.removeItem(key)
   }
-  static async clear() {
-    try {
-      await AsyncStorage.clear()
-    } catch (e) {}
+  static clear() {
+    NativeRnAuth?.clear()
   }
-
 }

@@ -1,11 +1,11 @@
-const path = require('path');
-const pkg = require('../package.json');
+const path = require('path')
+const pkg = require('../package.json')
 
 module.exports = {
   project: {
     ios: {
-      automaticPodsInstallation: true,
-    },
+      automaticPodsInstallation: true
+    }
   },
   dependencies: {
     [pkg.name]: {
@@ -14,8 +14,8 @@ module.exports = {
         // Codegen script incorrectly fails without this
         // So we explicitly specify the platforms with empty object
         ios: {},
-        android: {},
-      },
-    },
-  },
-};
+        android: {}
+      }
+    }
+  }
+}
