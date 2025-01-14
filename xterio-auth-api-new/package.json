@@ -61,7 +61,8 @@
   },
   "homepage": "https://github.com/chenweigh/xterio-sdk-rn-auth#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "dependencies": {
     "js-base64": "^3.7.7",
