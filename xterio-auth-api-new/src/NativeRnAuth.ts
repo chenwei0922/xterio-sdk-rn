@@ -3,7 +3,7 @@ import { TurboModuleRegistry } from 'react-native'
 
 export interface Spec extends TurboModule {
   multiply(a: number, b: number): number
-  login(url: string): void
+  login(url: string, scheme: string): Promise<any>
   //本地存储
   setItem(key: string, value: string): void
   getItem(key: string): string | null

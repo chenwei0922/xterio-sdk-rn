@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>xterio-rn</string>
+				<string>xterio-sdk-rn</string>
 			</array>
 		</dict>
 	</array>

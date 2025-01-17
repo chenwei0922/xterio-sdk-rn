@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "pod-backup": "cp ../xterio-sdk-rn-auth.podspec ../xterio-sdk-rn-auth.podspec.bak",
+    "pod-restore": "mv ../xterio-sdk-rn-auth.podspec.bak ../xterio-sdk-rn-auth.podspec",
+    "pod-install": "yarn pod-backup && cd ios && bundle install && bundle exec pod install && cd .. && yarn pod-restore",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

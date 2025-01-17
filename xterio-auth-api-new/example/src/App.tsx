@@ -10,7 +10,6 @@ import {
   type IXterioAuthContextProps
 } from '@xterio-sdk/rn-auth'
 import { useCallback, useEffect, useState } from 'react'
-// import s from 'react-native-webview'
 
 const result = multiply(3, 7)
 const AppView = () => {
@@ -18,7 +17,7 @@ const AppView = () => {
 
   const _ssoLogin = useCallback(() => {
     // const url = `https://api.playvrs.net/account/v1/oauth2/authorize?client_id=4gsmgur6gkp8u9ps8dlco3k7eo&logout=1&mode=default&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2F&response_type=code&scope=all`
-    login(LoginType.Default)
+    login(LoginType.Email)
   }, [login])
 
   const _openPage = async () => {
@@ -46,21 +45,24 @@ const AppView = () => {
 export default function App() {
   const config: IXterioAuthContextProps = {
     app_id: 'apiautotest',
-    client_id: '4gsmgur6gkp8u9ps8dlco3k7eo',
+    client_id: 'jdchu9nt5f7z8aqp4syx2kmb63',
     client_secret: 'ABC23',
-    redirect_uri: 'xterio-rn://',
+    redirect_uri: 'xterio-sdk-rn://auth',
     env: Env.Dev
   }
   return (
-    <XterioAuthProvider {...config}>
-      <AppView />
-    </XterioAuthProvider>
+    <View style={{ flex: 1, position: 'relative', backgroundColor: 'blue' }}>
+      <XterioAuthProvider {...config}>
+        <AppView />
+      </XterioAuthProvider>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'yellow',
     alignItems: 'center',
     justifyContent: 'center'
   }

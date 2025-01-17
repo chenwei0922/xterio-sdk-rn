@@ -1,7 +1,16 @@
 import { decode } from 'js-base64'
 import { Env, LoginMethodType, LoginType, type ISSoTokensParams, type Payload } from '../interfaces/loginInfo'
 import NativeRnAuth from '../NativeRnAuth'
-import { EnvVariableConfig, LoadingState, setLogLevel, XLog, XTERIO_EVENTS, XTimeOut } from '../utils'
+import {
+  EnvVariableConfig,
+  getQsParams,
+  LoadingState,
+  setLogLevel,
+  XLog,
+  XTERIO_CONST,
+  XTERIO_EVENTS,
+  XTimeOut
+} from '../utils'
 import { XterioAuthService } from './AuthService'
 import { XterioAuthInfo, XterioAuthTokensManager, XterioAuthUserInfoManager } from './XterAuthInfo'
 import { XterioCache } from './XterCache'
@@ -82,6 +91,24 @@ export class XterioAuth {
     return XterioAuthTokensManager.idToken || ''
   }
 
+  /** go login with code */
+  private static async codeLogin(url: string) {
+    const queryParams = qs.parseUrl(url)
+    const { query } = queryParams
+    const code = getQsParams('code', query)
+    const loginmethod = getQsParams('sso_login_method', query)
+    const loginWallet = getQsParams('sso_login_wallet', query)
+    XterioAuthInfo.loginMethod = (loginmethod || '') as LoginMethodType
+    XterioAuthInfo.loginWallet = loginWallet || ''
+    XLog.debug('code=', code, 'sso_login_method=', loginmethod, 'sso_login_wallet=', loginWallet)
+    if (!code) return
+    XLog.debug('going to code login ...')
+    const res = await XterioAuthService.login(code as string)
+    if (res?.uuid) {
+      XterioCache.delete(XTERIO_CONST.LOGIN_TYPE)
+    }
+  }
+
   private static clearData() {
     XterioAuthTokensManager.removeTokens()
     XterioAuthUserInfoManager.removeUserInfo()
@@ -94,7 +121,7 @@ export class XterioAuth {
       app_id = '',
       client_id = '',
       client_secret = '',
-      redirect_uri = 'exampleauth',
+      redirect_uri = '',
       mode = 'default',
       logout = _env === Env.Dev ? '1' : '1',
       logLevel = 1
@@ -177,7 +204,23 @@ export class XterioAuth {
 
     //go to authorize
     XLog.debug('going to authorize ...')
-    NativeRnAuth?.login(XterioAuthInfo.authorizeUrl)
+    XLog.debug('authorize url=', XterioAuthInfo.authorizeUrl)
+    const scheme = XterioAuthInfo.config?.redirect_uri?.split('://')?.[0] || ''
+
+    //
+    // const url =
+    //   'xterio-sdk-rn://auth?sso_login_method=email&sso_login_wallet=&code=MWIZY2JJMTQTMJA5MS0ZY2I3LTLKZJKTMJAZY2U5YZM3NZJK'
+    // XterioAuth.codeLogin(url)
+    // return
+    NativeRnAuth?.login(XterioAuthInfo.authorizeUrl, scheme)
+      .then((res) => {
+        XLog.debug('the auth callback url=', res)
+        //xterio-sdk-rn://auth?sso_login_method=email&sso_login_wallet=&code=NGY1YMRKODGTMZRKZS0ZM2I3LWJKZGMTODG0YJQYYWNLMZA1
+        XterioAuth.codeLogin(res)
+      })
+      .catch((err: string) => {
+        XLog.debug('login failed:', err)
+      })
   }
   /** logout */
   static logout() {

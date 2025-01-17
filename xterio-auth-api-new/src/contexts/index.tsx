@@ -14,6 +14,9 @@ import { XTERIO_EVENTS } from '../utils'
 import { XterioAuthTokensManager } from '../modules/XterAuthInfo'
 import { getPageUri } from '../modules/XterPage'
 import XWebView from '../views/Web'
+import { StyleSheet } from 'react-native'
+import { RootSiblingParent } from 'react-native-root-siblings'
+import { XterUI } from '../views/XterUI'
 
 export interface IXterioAuthContextProps extends Partial<ISSoTokensParams> {
   env?: Env
@@ -66,6 +69,10 @@ export const XterioAuthProvider: FC<PropsWithChildren<IXterioAuthContextProps>> 
 
   const openPage = useCallback(async (page: PageType, options?: PageOptionParam) => {
     const uri = await getPageUri(page, options)
+    if (uri) {
+      XterUI.openWeb(uri)
+    }
+    return
     setWebState({
       uri: uri || '',
       show: !!uri
@@ -86,8 +93,10 @@ export const XterioAuthProvider: FC<PropsWithChildren<IXterioAuthContextProps>> 
         openPage
       }}
     >
-      {children}
-      {webState?.show && <XWebView url={webState?.uri} />}
+      <RootSiblingParent>
+        {children}
+        {/* {webState?.show && <XWebView style={styles.absoluteFill} url={webState?.uri} />} */}
+      </RootSiblingParent>
     </AuthContext.Provider>
   )
 }
@@ -95,3 +104,16 @@ export const XterioAuthProvider: FC<PropsWithChildren<IXterioAuthContextProps>> 
 export const useXterioAuthContext = () => {
   return useContext(AuthContext)
 }
+
+const styles = StyleSheet.create({
+  absoluteFill: {
+    backgroundColor: 'red',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  }
+})

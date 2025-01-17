@@ -6,7 +6,8 @@ import { XterEventEmiter } from '../../modules/XterEventEmitter'
 
 async function resolveResp<T>(resp: Response): Promise<T> {
   const res: IResponse<T> = await resp.json()
-  if (res.err_code != 0) {
+  XLog.debug('////res=', resp, res)
+  if (res.err_code !== 0) {
     if (resp.status === 401 && res.err_code === 91001) {
       // TOAST.noti('error', 'Your session has expired, please sign in again.')
       XterEventEmiter.emit(XTERIO_EVENTS.Expired)
@@ -56,7 +57,7 @@ const fetcher = async <T>({ method, path, params, headers, data, Authorization }
     headers: {
       'content-type': 'application/json',
       'X-SDK-Version': 'auth-' + getPackageVersion(),
-      'X-Platform': 'Web',
+      'X-Platform': 'ReactNative',
       'X-App-ID': XterioAuthInfo.app_id,
       'X-Client-ID': XterioAuthInfo.client_id,
       'X-Timestamp': Date.now().toString(),
@@ -74,6 +75,8 @@ const fetcher = async <T>({ method, path, params, headers, data, Authorization }
   }
 
   const req = new Request(url, requestOptions)
+  XLog.error('////url=', url, requestOptions)
+
   try {
     const resp = await fetch(req)
     if (resp.url === XterioAuthInfo.PageUriApi) {

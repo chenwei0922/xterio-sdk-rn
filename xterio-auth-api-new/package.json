@@ -42,6 +42,7 @@
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "build": "yarn clean && bob build",
     "prepare": "bob build",
     "release": "release-it"
   },
@@ -67,6 +68,7 @@
   "dependencies": {
     "js-base64": "^3.7.7",
     "query-string": "^9.1.1",
+    "react-native-root-siblings": "^5.0.1",
     "react-native-webview": "^13.13.1"
   },
   "devDependencies": {

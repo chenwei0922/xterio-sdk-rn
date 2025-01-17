@@ -35,17 +35,19 @@ RCT_EXPORT_MODULE(NativeRnAuth)
   }
 }
 
-- (void)login:(NSString *)url  {
+- (void)login:(NSString *)url scheme:(NSString *)scheme resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
   NSURL *authURL = [NSURL URLWithString:url];
-  NSString *scheme = @"xterio-rn";
+  NSString *_scheme = scheme ? scheme : @"xterio-sdk-rn";
   
   ASWebAuthenticationSession *session = [[ASWebAuthenticationSession alloc] initWithURL:authURL
-                                                                 callbackURLScheme:scheme
+                                                                 callbackURLScheme:_scheme
                                                                       completionHandler:^(NSURL *callbackURL, NSError *error) {
     if (error != nil) {
       NSLog(@"[XterioAuth] Open url error");
+      reject(@"XterioAuth", @"open url error", nil);
     }else{
       NSLog(@"[XterioAuth] Authenticated successfully: %@ %@", callbackURL, callbackURL.absoluteString);
+      resolve(callbackURL.absoluteString);
     }
   }];
   session.presentationContextProvider = self;
@@ -53,30 +55,10 @@ RCT_EXPORT_MODULE(NativeRnAuth)
     [session start];
   }else{
     NSLog(@"[XterioAuth] Can not open url");
+    reject(@"XterioAuth", @"canot open url", nil);
   }
-
-//   ASWebAuthenticationSession *authSession = [[ASWebAuthenticationSession alloc] initWithURL:authURL
-//                                                                            callbackURLScheme:@"xterio-rn"
-//                                                                            completionHandler:^(NSURL *callbackURL, NSError *error) {
-//       if (error != nil) {
-//           // 处理认证失败的情况
-//         NSError *error = [NSError errorWithDomain:@"com.libeccio.xterio" code:-1 userInfo:nil];
-// //        reject(@"Error", @"Open url error", error);
-//       } else {
-//           // 处理认证成功的情况，callbackURL 包含返回的认证信息
-//           NSLog(@"Authenticated successfully: %@", callbackURL);
-// //        resolve(callbackURL.absoluteString);
-//       }
-//   }];
-//   authSession.presentationContextProvider = self;
-//   if(authSession.canStart){
-//     [authSession start];
-//   }else{
-//     //失败
-//     NSError *error = [NSError errorWithDomain:@"com.libeccio.xterio" code:-1 userInfo:nil];
-// //    reject(@"Error", @"Can not open url", error);
-//   }
 }
+
 - (ASPresentationAnchor)presentationAnchorForWebAuthenticationSession:(ASWebAuthenticationSession *)session{
   __block ASPresentationAnchor anchor;
   dispatch_sync(dispatch_get_main_queue(), ^{
@@ -89,6 +71,7 @@ RCT_EXPORT_MODULE(NativeRnAuth)
     NSNumber *result = @(a * b);
     return result;
 }
+
 
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params

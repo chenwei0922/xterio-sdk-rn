@@ -3370,6 +3370,7 @@ __metadata:
     react: 18.3.1
     react-native: 0.76.5
     react-native-builder-bob: ^0.35.2
+    react-native-root-siblings: ^5.0.1
     react-native-webview: ^13.13.1
     release-it: ^17.10.0
     turbo: ^1.10.7
@@ -3377,7 +3378,6 @@ __metadata:
   peerDependencies:
     react: "*"
     react-native: "*"
-    react-native-webview: "*"
   languageName: unknown
   linkType: soft
 
@@ -10710,6 +10710,13 @@ __metadata:
   bin:
     bob: bin/bob
   checksum: 254a481e35e359391d249a89aaea8b334479f6bec5c55b840dd05ae48e7733237e2e47a07d27e1132c25b39a1a9b330f2c1e706622b0a00ba4dfcec8183efa56
+  languageName: node
+  linkType: hard
+
+"react-native-root-siblings@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "react-native-root-siblings@npm:5.0.1"
+  checksum: f6885e60064eca9181d02b643901dee313368e53167683d9869951fb870542f3faf01548a9dd82df12d6964bb61ef636ec7b53aca9b9b42309b4ac11c1710199
   languageName: node
   linkType: hard
 
