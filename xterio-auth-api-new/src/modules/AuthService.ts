@@ -25,12 +25,15 @@ export class XterioAuthService {
    */
   static async login(code: string) {
     const { client_id = '', client_secret = '', redirect_uri = '', grant_type = '' } = XterioAuthInfo.config || {}
-    const param = { client_id, client_secret, redirect_uri, grant_type, code }
-    const data = new URLSearchParams(param)
+    const param: any = { client_id, client_secret, redirect_uri, grant_type, code }
+    const formBody = Object.keys(param)
+      .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(param[key]))
+      .join('&')
+
     XLog.debug('go login')
 
-    const res = await postFetcher<ITokenRes, typeof data>(`/account/v1/oauth2/token`, data, '', {
-      ['content-type']: 'application/x-www-form-urlencoded'
+    const res = await postFetcher<ITokenRes, any>(`/account/v1/oauth2/token`, formBody, '', {
+      'Content-Type': 'application/x-www-form-urlencoded'
     })
       .then(async (res) => {
         XLog.info('login success.')
