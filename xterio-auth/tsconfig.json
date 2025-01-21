@@ -2,8 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@xterio-sdk/rn-auth": ["./src/index"],
-      "@/*": ["./src/*"]
+      "@xterio-sdk/rn-auth": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

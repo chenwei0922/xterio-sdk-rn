@@ -41,7 +41,8 @@
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "clean": "del-cli lib",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "build": "yarn clean && bob build",
     "prepare": "bob build",
     "release": "release-it"
   },
@@ -61,11 +62,19 @@
   },
   "homepage": "https://github.com/chenweigh/xterio-sdk-rn-auth#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "dependencies": {
+    "js-base64": "^3.7.7",
+    "query-string": "^9.1.1",
+    "react-native-root-siblings": "^5.0.1",
+    "react-native-webview": "^13.13.1"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.5.0",
+    "@react-native-community/cli": "15.0.1",
     "@react-native/eslint-config": "^0.73.1",
     "@release-it/conventional-changelog": "^9.0.2",
     "@types/jest": "^29.5.5",
@@ -81,6 +90,7 @@
     "react-native": "0.76.5",
     "react-native-builder-bob": "^0.35.2",
     "release-it": "^17.10.0",
+    "turbo": "^1.10.7",
     "typescript": "^5.2.2"
   },
   "resolutions": {
@@ -130,30 +140,13 @@
       "prettier"
     ],
     "rules": {
-      "react/react-in-jsx-scope": "off",
-      "prettier/prettier": [
-        "error",
-        {
-          "quoteProps": "consistent",
-          "singleQuote": true,
-          "tabWidth": 2,
-          "trailingComma": "es5",
-          "useTabs": false
-        }
-      ]
+      "react/react-in-jsx-scope": "off"
     }
   },
   "eslintIgnore": [
     "node_modules/",
     "lib/"
   ],
-  "prettier": {
-    "quoteProps": "consistent",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
-  },
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
@@ -190,16 +183,12 @@
     },
     "android": {
       "javaPackageName": "com.xteriosdk.rnauth"
-    }
+    },
+    "includesGeneratedCode": true
   },
   "create-react-native-library": {
-    "languages": "js",
-    "type": "library",
+    "type": "turbo-module",
+    "languages": "kotlin-objc",
     "version": "0.45.5"
-  },
-  "dependencies": {
-    "@react-native-async-storage/async-storage": "^2.1.0",
-    "js-base64": "^3.7.7",
-    "query-string": "^9.1.1"
   }
 }

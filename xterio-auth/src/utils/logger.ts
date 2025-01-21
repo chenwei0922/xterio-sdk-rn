@@ -10,8 +10,8 @@ enum LogLevel {
   OFF = 'OFF'
 }
 
-type LogType = 'debug'|'info'|'warn'|'error'|'off'
-const LogLevelData:Record<LogType, number> = {debug: 1, info: 2, warn: 3, error: 4, off: 5}
+type LogType = 'debug' | 'info' | 'warn' | 'error' | 'off'
+const LogLevelData: Record<LogType, number> = { debug: 1, info: 2, warn: 3, error: 4, off: 5 }
 let logLevel = LogLevelData.debug
 
 export const setLogLevel = (level: number) => {

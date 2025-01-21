@@ -1,12 +1,12 @@
 import qs from 'query-string'
 import type { IResponse } from './interfaces'
-import { XterEventEmiter } from '@/modules/XterEventEmitter'
 import { getPackageVersion, randomNonceStr, XLog, XTERIO_EVENTS } from '..'
-import { XterioAuthInfo, XterioAuthTokensManager } from '@/modules/XterAuthInfo'
+import { XterioAuthInfo, XterioAuthTokensManager } from '../../modules/XterAuthInfo'
+import { XterEventEmiter } from '../../modules/XterEventEmitter'
 
 async function resolveResp<T>(resp: Response): Promise<T> {
   const res: IResponse<T> = await resp.json()
-  if (res.err_code != 0) {
+  if (res.err_code !== 0) {
     if (resp.status === 401 && res.err_code === 91001) {
       // TOAST.noti('error', 'Your session has expired, please sign in again.')
       XterEventEmiter.emit(XTERIO_EVENTS.Expired)
@@ -54,9 +54,9 @@ const fetcher = async <T>({ method, path, params, headers, data, Authorization }
   const requestOptions: RequestInit = {
     method,
     headers: {
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
       'X-SDK-Version': 'auth-' + getPackageVersion(),
-      'X-Platform': 'Web',
+      'X-Platform': 'ReactNative',
       'X-App-ID': XterioAuthInfo.app_id,
       'X-Client-ID': XterioAuthInfo.client_id,
       'X-Timestamp': Date.now().toString(),
@@ -69,11 +69,12 @@ const fetcher = async <T>({ method, path, params, headers, data, Authorization }
 
   if (data) {
     // PUT 和 application/x-www-form-urlencoded 提交的是表单数据，不能stringify
-    const needStringify = method !== 'PUT' && headers?.['content-type'] !== 'application/x-www-form-urlencoded'
-    requestOptions.body = needStringify ? JSON.stringify(data) : (data as ReadableStream)
+    const needStringify = method !== 'PUT' && headers?.['Content-Type'] !== 'application/x-www-form-urlencoded'
+    requestOptions.body = needStringify ? JSON.stringify(data) : (data as any)
   }
 
   const req = new Request(url, requestOptions)
+
   try {
     const resp = await fetch(req)
     if (resp.url === XterioAuthInfo.PageUriApi) {

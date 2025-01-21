@@ -1,6 +1,6 @@
 import { XLog } from './logger'
 
-class Singleton {
+export class Singleton {
   private static instances: { [key: string]: any } = {}
   constructor() {
     //

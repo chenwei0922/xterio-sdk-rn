@@ -1,6 +1,6 @@
 # @xterio-sdk/rn-auth
 
-test
+xterio auth service in react native
 
 ## Installation
 
@@ -16,7 +16,7 @@ import { multiply } from '@xterio-sdk/rn-auth';
 
 // ...
 
-const result = await multiply(3, 7);
+const result = multiply(3, 7);
 ```
 
 

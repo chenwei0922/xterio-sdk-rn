@@ -10,12 +10,12 @@ import type {
   IRefreshServiceBody,
   IRegisterConfirmServiceBody,
   PageUriMapType
-} from '@/interfaces/loginInfo'
-import { XLog, XTERIO_EVENTS } from '@/utils'
-import { getFetcher, postFetcher } from '@/utils/fetchers'
+} from '../interfaces/loginInfo'
+import { XLog, XTERIO_EVENTS } from '../utils'
+import { getFetcher, postFetcher } from '../utils/fetchers'
+import { XterioAuth } from './XterAuth'
 import { XterioAuthInfo, XterioAuthTokensManager, XterioAuthUserInfoManager } from './XterAuthInfo'
 import { XterEventEmiter } from './XterEventEmitter'
-import { XterioAuth } from './XterAuth'
 
 export class XterioAuthService {
   /**
@@ -25,20 +25,23 @@ export class XterioAuthService {
    */
   static async login(code: string) {
     const { client_id = '', client_secret = '', redirect_uri = '', grant_type = '' } = XterioAuthInfo.config || {}
-    const param = { client_id, client_secret, redirect_uri, grant_type, code }
-    const data = new URLSearchParams(param)
+    const param: any = { client_id, client_secret, redirect_uri, grant_type, code }
+    const formBody = Object.keys(param)
+      .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(param[key]))
+      .join('&')
+
     XLog.debug('go login')
 
-    const res = await postFetcher<ITokenRes, typeof data>(`/account/v1/oauth2/token`, data, '', {
-      ['content-type']: 'application/x-www-form-urlencoded'
+    const res = await postFetcher<ITokenRes, any>(`/account/v1/oauth2/token`, formBody, '', {
+      'Content-Type': 'application/x-www-form-urlencoded'
     })
       .then(async (res) => {
         XLog.info('login success.')
-        await XterioAuthTokensManager.setTokens(res)
+        XterioAuthTokensManager.setTokens(res)
         XterioAuth.setIsLogin(true)
         return res
       })
-      .catch((err) => {
+      .catch(() => {
         XLog.error('login failed.')
         return null
       })
@@ -62,7 +65,7 @@ export class XterioAuthService {
       ...profileInfo,
       wallet
     }
-    await XterioAuthUserInfoManager.setUserInfo(res)
+    XterioAuthUserInfoManager.setUserInfo(res)
     if (res?.uuid) {
       XterEventEmiter.emit(XTERIO_EVENTS.ACCOUNT, res)
     }
@@ -75,7 +78,7 @@ export class XterioAuthService {
         XLog.info('get profile success.')
         return res
       })
-      .catch((err) => {
+      .catch(() => {
         XLog.error('get profile failed.')
         return null
       })
@@ -89,7 +92,7 @@ export class XterioAuthService {
         XLog.info('get wallet success.')
         return res
       })
-      .catch((err) => {
+      .catch(() => {
         XLog.error('get wallet failed.')
         return null
       })
@@ -115,7 +118,7 @@ export class XterioAuthService {
     })
     XLog.info('ttl login', res?.error ? 'failed' : 'success')
     if (!res?.error) {
-      await XterioAuthTokensManager.setTokens(res)
+      XterioAuthTokensManager.setTokens(res)
       XterioAuth.setIsLogin(true)
     }
     return res?.error ? { ...res, error: true } : { ...res, error: false }
@@ -183,7 +186,7 @@ export class XterioAuthService {
       } as ILoginServiceResError
     })
     if (!res?.error) {
-      await XterioAuthTokensManager.setTokens(res)
+      XterioAuthTokensManager.setTokens(res)
       XterioAuth.setIsLogin(true)
     }
     return res?.error ? res : { ...res, error: false }

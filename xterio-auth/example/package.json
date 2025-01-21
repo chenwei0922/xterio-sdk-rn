@@ -1,25 +1,36 @@
 {
   "name": "@xterio-sdk/rn-auth-example",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "pod-backup": "cp ../xterio-sdk-rn-auth.podspec ../xterio-sdk-rn-auth.podspec.bak",
+    "pod-restore": "mv ../xterio-sdk-rn-auth.podspec.bak ../xterio-sdk-rn-auth.podspec",
+    "pod-install": "yarn pod-backup && cd ios && bundle install && bundle exec pod install && cd .. && yarn pod-restore",
+    "gradlew": "cd android && ./gradlew generateCodegenArtifactsFromSchema && cd ..",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "build:android": "react-native build-android --extra-params \"--no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a\"",
+    "build:ios": "react-native build-ios --scheme RnAuthExample --mode Debug --extra-params \"-sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO\""
   },
   "dependencies": {
-    "@expo/metro-runtime": "~4.0.0",
-    "expo": "~52.0.23",
-    "expo-status-bar": "~2.0.0",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
     "react-native": "0.76.5",
-    "react-native-web": "~0.19.13"
+    "react-native-webview": "^13.13.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli-platform-android": "15.0.1",
+    "@react-native-community/cli-platform-ios": "15.0.1",
+    "@react-native/babel-preset": "0.76.5",
+    "@react-native/metro-config": "0.76.5",
+    "@react-native/typescript-config": "0.76.5",
     "react-native-builder-bob": "^0.35.2"
   },
-  "private": true
+  "engines": {
+    "node": ">=18"
+  }
 }

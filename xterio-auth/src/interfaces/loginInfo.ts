@@ -151,11 +151,7 @@ export interface PageUriMapType {
   marketplace: string
   collection: string
 }
-export interface PagePopupConfig {
-  placement: 'left' | 'right' | 'center'
-  style: Partial<CSSStyleDeclaration>
-  showCloseIcon?: boolean
-}
+
 export interface XterViewCustomizeOptions {
   /** whether hide wallet entry */
   hide_wallet_entrance?: BooleanOrBinary
@@ -191,6 +187,4 @@ export interface PageOptionParam {
   features?: { k: string; initValues: (number | string)[]; type?: string }[]
   /** set xterio page layout options */
   XterViewCustomOptions?: Partial<XterViewCustomizeOptions>
-  /** set alert configs */
-  popupConfig?: Partial<PagePopupConfig>
 }
