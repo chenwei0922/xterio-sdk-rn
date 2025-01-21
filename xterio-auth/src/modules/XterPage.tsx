@@ -5,7 +5,7 @@ import { XterioAuth } from './XterAuth'
 import { XterioAuthInfo } from './XterAuthInfo'
 import qs from 'query-string'
 
-const getOtac = async () => {
+export const getOtac = async () => {
   //tip: otac invalid when used once
   if (XterioAuth.isLogin) {
     const otac = await XterioAuthService.getOtacByTokens()

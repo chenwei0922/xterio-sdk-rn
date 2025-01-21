@@ -13,8 +13,6 @@ import { XterEventEmiter } from '../modules/XterEventEmitter'
 import { XTERIO_EVENTS } from '../utils'
 import { XterioAuthTokensManager } from '../modules/XterAuthInfo'
 import { getPageUri } from '../modules/XterPage'
-import XWebView from '../views/Web'
-import { StyleSheet } from 'react-native'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { XterUI } from '../views/XterUI'
 
@@ -29,7 +27,10 @@ interface IAuthContextState {
   loginWalletAddress: string
   login(mode?: LoginType): void
   logout(): void
-  openPage(page: PageType, options?: PageOptionParam): Promise<string>
+  openPage(page: PageType, options?: PageOptionParam): Promise<void>
+  getPageUrl(page: PageType, options?: PageOptionParam): Promise<string>
+  getIdToken(): Promise<string>
+  getOtac(): Promise<string>
 }
 const initState = {}
 
@@ -40,7 +41,6 @@ export const XterioAuthProvider: FC<PropsWithChildren<IXterioAuthContextProps>> 
 
   const [userinfo, setUserinfo] = useState<IUserInfo>()
   const [mounted, setMounted] = useState(false)
-  const [webState, setWebState] = useState<{ uri: string; show: boolean }>({ uri: '', show: false })
 
   useEffect(() => {
     //initial
@@ -73,11 +73,10 @@ export const XterioAuthProvider: FC<PropsWithChildren<IXterioAuthContextProps>> 
       XterUI.openWeb(uri)
     }
     return
-    setWebState({
-      uri: uri || '',
-      show: !!uri
-    })
-    return uri || ''
+  }, [])
+  const getPageUrl = useCallback(async (page: PageType, options?: PageOptionParam) => {
+    const uri = await getPageUri(page, options)
+    return uri
   }, [])
 
   return (
@@ -90,13 +89,13 @@ export const XterioAuthProvider: FC<PropsWithChildren<IXterioAuthContextProps>> 
         loginWalletAddress: XterioAuth.loginWalletAddress,
         login: XterioAuth.login,
         logout: XterioAuth.logout,
-        openPage
+        openPage,
+        getPageUrl,
+        getIdToken: XterioAuth.getIdToken,
+        getOtac: XterioAuth.getOtac
       }}
     >
-      <RootSiblingParent>
-        {children}
-        {/* {webState?.show && <XWebView style={styles.absoluteFill} url={webState?.uri} />} */}
-      </RootSiblingParent>
+      <RootSiblingParent>{children}</RootSiblingParent>
     </AuthContext.Provider>
   )
 }
@@ -104,16 +103,3 @@ export const XterioAuthProvider: FC<PropsWithChildren<IXterioAuthContextProps>> 
 export const useXterioAuthContext = () => {
   return useContext(AuthContext)
 }
-
-const styles = StyleSheet.create({
-  absoluteFill: {
-    backgroundColor: 'red',
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  }
-})

@@ -2,35 +2,31 @@ import { Text, View, StyleSheet, Button } from 'react-native'
 import {
   Env,
   LoginType,
-  multiply,
   PageType,
-  Storage,
   useXterioAuthContext,
   XterioAuthProvider,
   type IXterioAuthContextProps
 } from '@xterio-sdk/rn-auth'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
-const result = multiply(3, 7)
 const AppView = () => {
-  const { login, logout, openPage, loginMethod, loginWalletAddress, isLogin, userinfo } = useXterioAuthContext()
+  const { login, logout, openPage, getPageUrl, loginMethod, loginWalletAddress, isLogin, userinfo } =
+    useXterioAuthContext()
 
   const _ssoLogin = useCallback(() => {
-    // const url = `https://api.playvrs.net/account/v1/oauth2/authorize?client_id=4gsmgur6gkp8u9ps8dlco3k7eo&logout=1&mode=default&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2F&response_type=code&scope=all`
     login(LoginType.Email)
   }, [login])
 
-  const _openPage = async () => {
+  const _openPage = useCallback(() => {
     openPage(PageType.nft_market)
-  }
-  const [value, setValue] = useState('')
+  }, [openPage])
+
+  const _getPageUrl = useCallback(() => {
+    console.log('the page uri=', getPageUrl(PageType.nft_market))
+  }, [getPageUrl])
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
-      <Text>Storage: {value}</Text>
-      <Button title="SetValue" onPress={() => Storage.setItem('test', '111')} />
-      <Button title="GetValue" onPress={() => setValue(Storage.getItem('test') || '')} />
       <Text>isLogin: {isLogin}</Text>
       <Text>userinfo: {JSON.stringify(userinfo)}</Text>
       <Text>loginMethod: {loginMethod}</Text>
@@ -38,6 +34,7 @@ const AppView = () => {
       <Button title="Login" onPress={_ssoLogin} />
       <Button title="Logout" onPress={logout} />
       <Button title="OpenPage" onPress={_openPage} />
+      <Button title="GetPageUrl" onPress={_getPageUrl} />
     </View>
   )
 }

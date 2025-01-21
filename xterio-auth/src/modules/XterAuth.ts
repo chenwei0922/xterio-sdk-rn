@@ -16,6 +16,7 @@ import { XterioAuthInfo, XterioAuthTokensManager, XterioAuthUserInfoManager } fr
 import { XterioCache } from './XterCache'
 import { XterEventEmiter } from './XterEventEmitter'
 import qs from 'query-string'
+import { getOtac } from './XterPage'
 
 export class XterioAuth {
   /** user is login */
@@ -234,6 +235,7 @@ export class XterioAuth {
     /// idtoken not expired or refreshed if the promise return non-empty string
     return await XterioAuth.checkToken('getIdToken')
   }
+  static getOtac = getOtac
   static get loginMethod() {
     return XterioAuthInfo.loginMethod
   }
