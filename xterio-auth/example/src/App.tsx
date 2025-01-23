@@ -14,7 +14,7 @@ const AppView = () => {
     useXterioAuthContext()
 
   const _ssoLogin = useCallback(() => {
-    login(LoginType.Email)
+    login(LoginType.Default)
   }, [login])
 
   const _openPage = useCallback(() => {
