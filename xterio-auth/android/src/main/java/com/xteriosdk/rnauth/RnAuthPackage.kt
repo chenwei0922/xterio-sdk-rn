@@ -9,7 +9,7 @@ import java.util.HashMap
 
 class RnAuthPackage : BaseReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == RnAuthModule.NAME) {
+    return if (name == RnAuthModuleImpl.NAME) {
       RnAuthModule(reactContext)
     } else {
       null
@@ -19,14 +19,15 @@ class RnAuthPackage : BaseReactPackage() {
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
       val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-      moduleInfos[RnAuthModule.NAME] = ReactModuleInfo(
-        RnAuthModule.NAME,
-        RnAuthModule.NAME,
+      val isTurboModule: Boolean = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
+      moduleInfos[RnAuthModuleImpl.NAME] = ReactModuleInfo(
+        RnAuthModuleImpl.NAME,
+        RnAuthModuleImpl.NAME,
         false,  // canOverrideExistingModule
         false,  // needsEagerInit
         true,  // hasConstants
         false,  // isCxxModule
-        true // isTurboModule
+        isTurboModule // isTurboModule
       )
       moduleInfos
     }

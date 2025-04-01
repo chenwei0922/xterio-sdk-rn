@@ -37,7 +37,7 @@ export class XterioAuthInfo {
   static PageUriApi: string
 
   /** record logined ui type */
-  private static _loginType: LoginType = XterioCache.get(XTERIO_CONST.LOGIN_TYPE) as LoginType
+  private static _loginType: LoginType
   static set loginType(_type: LoginType) {
     this._loginType = _type
     XterioCache.set(XTERIO_CONST.LOGIN_TYPE, _type)
@@ -47,7 +47,7 @@ export class XterioAuthInfo {
   }
 
   /** record logined way */
-  private static _loginMethod: LoginMethodType = XterioCache.get(XTERIO_CONST.LOGIN_METHOD) as LoginMethodType
+  private static _loginMethod: LoginMethodType
   static set loginMethod(val: LoginMethodType) {
     this._loginMethod = val
     XterioCache.set(XTERIO_CONST.LOGIN_METHOD, val)
@@ -57,7 +57,7 @@ export class XterioAuthInfo {
   }
 
   /** record logined wallet address */
-  private static _loginWalletAddress: string = XterioCache.get(XTERIO_CONST.LOGIN_WALLET_ADDRESS)
+  private static _loginWalletAddress: string
   static set loginWallet(val: string) {
     this._loginWalletAddress = val
     XterioCache.set(XTERIO_CONST.LOGIN_WALLET_ADDRESS, val)

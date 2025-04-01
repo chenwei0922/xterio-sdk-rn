@@ -27,7 +27,7 @@ const AppView = () => {
 
   return (
     <View style={styles.container}>
-      <Text>isLogin: {isLogin}</Text>
+      <Text>isLogin: {isLogin ? 'true' : 'false'}</Text>
       <Text>userinfo: {JSON.stringify(userinfo)}</Text>
       <Text>loginMethod: {loginMethod}</Text>
       <Text>loginWalletAddress: {loginWalletAddress}</Text>

@@ -5,6 +5,6 @@ export * from './modules/XterAuth'
 export * from './interfaces/loginInfo'
 export * from './contexts/index'
 
-export function multiply(a: number, b: number): number {
-  return RnAuth.multiply(a, b)
+export async function multiply(a: number, b: number): Promise<number> {
+  return await RnAuth.multiply(a, b)
 }

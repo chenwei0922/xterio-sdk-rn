@@ -4,7 +4,6 @@ const { getConfig } = require('react-native-builder-bob/metro-config')
 const pkg = require('../package.json')
 
 const root = path.resolve(__dirname, '..')
-console.warn('/////', root, pkg, __dirname)
 /**
  * Metro configuration
  * https://facebook.github.io/metro/docs/configuration

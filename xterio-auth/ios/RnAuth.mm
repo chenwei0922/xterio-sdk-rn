@@ -19,23 +19,23 @@ RCT_EXPORT_MODULE(NativeRnAuth)
   }
   return self;
 }
-- (NSString * _Nullable)getItem:(NSString *)key {
-  return [self.localStorage stringForKey:key];
+RCT_EXPORT_METHOD(getItem:(NSString *)key resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+  resolve([self.localStorage stringForKey:key]);
 }
-- (void)setItem:(NSString *)key value:(NSString *)value {
+RCT_EXPORT_METHOD(setItem:(NSString *)key value:(NSString *)value) {
   [self.localStorage setObject:value forKey:key];
 }
-- (void)removeItem:(NSString *)key {
+RCT_EXPORT_METHOD(removeItem:(NSString *)key) {
   [self.localStorage removeObjectForKey:key];
 }
-- (void)clear {
+RCT_EXPORT_METHOD(clear) {
   NSDictionary *keys = [self.localStorage dictionaryRepresentation];
   for (NSString *key in keys) {
     [self removeItem:key];
   }
 }
 
-- (void)login:(NSString *)url scheme:(NSString *)scheme resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+RCT_EXPORT_METHOD(login:(NSString *)url scheme:(NSString *)scheme resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
   NSURL *authURL = [NSURL URLWithString:url];
   NSString *_scheme = scheme ? scheme : @"xterio-sdk-rn";
   
@@ -59,6 +59,19 @@ RCT_EXPORT_MODULE(NativeRnAuth)
   }
 }
 
+RCT_EXPORT_METHOD(multiply:(double)a b:(double)b resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+  NSNumber *result = @(a * b);
+  resolve(result);
+}
+
+//RCT_NEW_ARCH_ENABLED 新写法，兼容Legacy，写法改成上面
+/*
+- (NSNumber *)multiply:(double)a b:(double)b {
+    NSNumber *result = @(a * b);
+    return result;
+}
+ */
+
 - (ASPresentationAnchor)presentationAnchorForWebAuthenticationSession:(ASWebAuthenticationSession *)session{
   __block ASPresentationAnchor anchor;
   dispatch_sync(dispatch_get_main_queue(), ^{
@@ -67,16 +80,11 @@ RCT_EXPORT_MODULE(NativeRnAuth)
   return anchor;
 }
 
-- (NSNumber *)multiply:(double)a b:(double)b {
-    NSNumber *result = @(a * b);
-    return result;
-}
-
-
+#ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
     return std::make_shared<facebook::react::NativeRnAuthSpecJSI>(params);
 }
-
+#endif
 @end

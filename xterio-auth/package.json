@@ -1,6 +1,6 @@
 {
   "name": "@xterio-sdk/rn-auth",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "xterio auth service in react native",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -42,7 +42,7 @@
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "clean": "del-cli ios/generated android/generated android/build example/android/build example/android/app/build example/ios/build lib",
     "build": "yarn clean && bob build",
     "prepare": "bob build",
     "release": "release-it"
@@ -178,12 +178,12 @@
     "name": "RNRnAuthSpec",
     "type": "modules",
     "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.xteriosdk.rnauth"
+    },
     "outputDir": {
       "ios": "ios/generated",
       "android": "android/generated"
-    },
-    "android": {
-      "javaPackageName": "com.xteriosdk.rnauth"
     },
     "includesGeneratedCode": true
   },

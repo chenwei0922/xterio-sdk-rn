@@ -69,7 +69,8 @@ export class XterioAuth {
 
   /** idToken check logic */
   private static async checkToken(_flag: string = 'init') {
-    XterioAuthTokensManager.setTokens(XterioCache.getTokens())
+    const _tokens = await XterioCache.getTokens()
+    XterioAuthTokensManager.setTokens(_tokens)
     const refresh_token = XterioAuthTokensManager.refreshToken
     let isvalid = XterioAuth.isVaildIdToken
     if (!isvalid && refresh_token) {
@@ -145,6 +146,9 @@ export class XterioAuth {
     XterioAuthInfo.env = _env
     XterioAuthInfo.baseURL = _baseURL
     XterioAuthInfo.pageURL = EnvVariableConfig[_env].PAGE_BASE
+    XterioAuthInfo.loginType = (await XterioCache.get(XTERIO_CONST.LOGIN_TYPE)) as LoginType
+    XterioAuthInfo.loginMethod = (await XterioCache.get(XTERIO_CONST.LOGIN_METHOD)) as LoginMethodType
+    XterioAuthInfo.loginWallet = await XterioCache.get(XTERIO_CONST.LOGIN_WALLET_ADDRESS)
 
     //TODO: TT
 

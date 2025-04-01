@@ -7,11 +7,11 @@ export class XterioCache {
     Storage.setItem(XTERIO_CONST.ID_TOKEN, id_token)
     Storage.setItem(XTERIO_CONST.REFRESH_TOKEN, refresh_token)
   }
-  static getTokens(): ITokenRes {
+  static async getTokens(): Promise<ITokenRes> {
     const _t: ITokenRes = {
-      access_token: Storage.getItem(XTERIO_CONST.ACCESS_TOKEN) || '',
-      id_token: Storage.getItem(XTERIO_CONST.ID_TOKEN) || '',
-      refresh_token: Storage.getItem(XTERIO_CONST.REFRESH_TOKEN) || ''
+      access_token: (await Storage.getItem(XTERIO_CONST.ACCESS_TOKEN)) || '',
+      id_token: (await Storage.getItem(XTERIO_CONST.ID_TOKEN)) || '',
+      refresh_token: (await Storage.getItem(XTERIO_CONST.REFRESH_TOKEN)) || ''
     }
     return _t
   }
@@ -28,8 +28,8 @@ export class XterioCache {
   static setUserInfo(value: IUserInfo) {
     Storage.setItem(XTERIO_CONST.USERINFO, JSON.stringify(value))
   }
-  static getUserInfo() {
-    const value = Storage.getItem<IUserInfo>(XTERIO_CONST.USERINFO)
+  static async getUserInfo() {
+    const value = await Storage.getItem<IUserInfo>(XTERIO_CONST.USERINFO)
     return value
   }
   static deleteUserInfo() {
@@ -41,7 +41,7 @@ export class XterioCache {
   static set<T = string>(key: string, value: T) {
     Storage.setItem(key, value || '')
   }
-  static get(key: string) {
-    return Storage.getItem(key) || ''
+  static async get(key: string) {
+    return (await Storage.getItem(key)) || ''
   }
 }

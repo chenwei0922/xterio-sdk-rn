@@ -7,9 +7,9 @@ export class Storage {
       NativeRnAuth?.setItem(key, val)
     } catch (e) {}
   }
-  static getItem<T = string>(key: string): T | null {
+  static async getItem<T = string>(key: string): Promise<T | null> {
     try {
-      let value = NativeRnAuth?.getItem(key)
+      let value = await NativeRnAuth?.getItem(key)
       if (value !== null) {
         try {
           value = JSON.parse(value)
