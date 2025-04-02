@@ -142,7 +142,8 @@ export enum PageType {
   asset = 'asset',
   nft_market = 'nft_marketplace',
   nft_collection = 'nft_collection',
-  setting = 'setting'
+  setting = 'setting',
+  get_xter = 'get_xter'
 }
 export type BooleanOrBinary = boolean | 1 | 0
 export interface PageUriMapType {
@@ -150,6 +151,7 @@ export interface PageUriMapType {
   settings: string
   marketplace: string
   collection: string
+  get_xter: string
 }
 
 export interface XterViewCustomizeOptions {

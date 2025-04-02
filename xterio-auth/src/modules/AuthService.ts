@@ -11,7 +11,7 @@ import type {
   IRegisterConfirmServiceBody,
   PageUriMapType
 } from '../interfaces/loginInfo'
-import { XLog, XTERIO_EVENTS } from '../utils'
+import { DefaultPageUriMap, XLog, XTERIO_EVENTS } from '../utils'
 import { getFetcher, postFetcher } from '../utils/fetchers'
 import { XterioAuth } from './XterAuth'
 import { XterioAuthInfo, XterioAuthTokensManager, XterioAuthUserInfoManager } from './XterAuthInfo'
@@ -260,12 +260,7 @@ export class XterioAuthService {
       XLog.error('getPageUrlMap', e)
       return {
         domain: '',
-        pages: {
-          asset: '/asset',
-          settings: '/settings',
-          marketplace: '/marketplace',
-          collection: '/collection/{app_id}/{collection_id}'
-        }
+        pages: DefaultPageUriMap
       }
     })
     XLog.debug(uri, res)

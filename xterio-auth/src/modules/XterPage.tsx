@@ -1,5 +1,5 @@
 import { PageType, type PageOptionParam } from '../interfaces/loginInfo'
-import { XLog } from '../utils'
+import { DefaultPageUriMap, XLog } from '../utils'
 import { XterioAuthService } from './AuthService'
 import { XterioAuth } from './XterAuth'
 import { XterioAuthInfo } from './XterAuthInfo'
@@ -49,10 +49,18 @@ export const getPageUri = async (page: PageType, options?: PageOptionParam) => {
     throw new Error('You must set xterio-auth app_id')
   }
   const {
-    asset: assetPath,
-    settings: settingPath,
-    marketplace: marketPath,
-    collection: collectionPath
+    asset: _asset,
+    settings: _settings,
+    marketplace: _marketplace,
+    collection: _collection,
+    get_xter: _get_xter
+  } = DefaultPageUriMap
+  const {
+    asset: assetPath = _asset,
+    settings: settingPath = _settings,
+    marketplace: marketPath = _marketplace,
+    collection: collectionPath = _collection,
+    get_xter: xterPath = _get_xter
   } = XterioAuthInfo.pageUriMap || {}
   const basePage = XterioAuthInfo.pageURL
   let uri = ''
@@ -81,6 +89,8 @@ export const getPageUri = async (page: PageType, options?: PageOptionParam) => {
       query = { features: encodeURIComponent(JSON.stringify(features)) }
     }
     uri = `${basePage}${collectionPath}`.replace('{app_id}', app_id).replace('{collection_id}', collection)
+  } else if (page === PageType.get_xter && xterPath) {
+    uri = `${basePage}${xterPath}`
   }
 
   if (uri) {

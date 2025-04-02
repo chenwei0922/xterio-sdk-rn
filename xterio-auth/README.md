@@ -189,7 +189,8 @@ export enum PageType {
   asset = 'asset',
   nft_market = 'nft_marketplace',
   nft_collection = 'nft_collection',
-  setting = 'setting'
+  setting = 'setting',
+  get_xter = 'get_xter'
 }
 ```
 

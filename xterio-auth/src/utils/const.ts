@@ -1,4 +1,4 @@
-import { Env } from '../interfaces/loginInfo'
+import { Env, type PageUriMapType } from '../interfaces/loginInfo'
 
 type EnvVariableType = {
   HCAPTCHA_SITE_KEY: string
@@ -25,6 +25,14 @@ export const EnvVariableConfig: Record<Env, EnvVariableType> = {
     PAGE_BASE: 'https://app.xter.io',
     PAGES_URI_API: 'https://resources.xter.io/configs/sdk/pages-production.json'
   }
+}
+
+export const DefaultPageUriMap: PageUriMapType = {
+  asset: '/asset',
+  settings: '/settings',
+  marketplace: '/marketplace',
+  collection: '/collection/{app_id}/{collection_id}',
+  get_xter: '/get-xter'
 }
 
 export const XTERIO_EVENTS = {
