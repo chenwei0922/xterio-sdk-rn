@@ -1,6 +1,4 @@
-// const version = __SDK_VERSION__ || '0.0.0'
-const version = '0.0.0'
-const TAG = 'XterioAuth'
+import { Utils } from './util'
 
 enum LogLevel {
   DEBUG = 'DEBUG',
@@ -10,50 +8,52 @@ enum LogLevel {
   OFF = 'OFF'
 }
 
-type LogType = 'debug' | 'info' | 'warn' | 'error' | 'off'
-const LogLevelData: Record<LogType, number> = { debug: 1, info: 2, warn: 3, error: 4, off: 5 }
-let logLevel = LogLevelData.debug
+const LogLevelData = { debug: 1, info: 2, warn: 3, error: 4, off: 5 }
+type LogType = keyof typeof LogLevelData
 
-export const setLogLevel = (level: number) => {
-  logLevel = level
-}
+export class XterLog {
+  private readonly name: string = 'XterioAuth'
+  private readonly version: string = Utils.pkgVersion || '0.0.0'
+  private logLevel: number = LogLevelData.debug
 
-const log = (level: LogLevel, ...args: any[]) => {
-  if (level === LogLevel.OFF || logLevel > LogLevelData[level.toLocaleLowerCase() as LogType]) {
-    return
+  getName() {
+    return this.name
   }
-  if (level === LogLevel.ERROR) {
-    console.error(`[${TAG}(v${version})]`, ...args)
-  } else if (level === LogLevel.WARN) {
-    console.warn(`[${TAG}(v${version})]`, ...args)
-  } else if (level === LogLevel.DEBUG) {
-    console.debug(`[${TAG}(v${version})]`, ...args)
-  } else {
-    console.log(`[${TAG}(v${version})]`, ...args)
+  getVersion() {
+    return this.version
+  }
+  setLogLevel(level: number) {
+    this.logLevel = level
+  }
+  private log(level: LogLevel, ...args: any[]) {
+    if (level === LogLevel.OFF || this.logLevel > LogLevelData[level.toLocaleLowerCase() as LogType]) {
+      return
+    }
+    const _name = this.getName()
+    const _version = this.getVersion()
+
+    if (level === LogLevel.ERROR) {
+      console.error(`[${_name}(v${_version})]`, ...args)
+    } else if (level === LogLevel.WARN) {
+      console.warn(`[${_name}(v${_version})]`, ...args)
+    } else if (level === LogLevel.DEBUG) {
+      console.debug(`[${_name}(v${_version})]`, ...args)
+    } else {
+      console.log(`[${_name}(v${_version})]`, ...args)
+    }
+  }
+  info(...args: any[]) {
+    this.log(LogLevel.INFO, ...args)
+  }
+  debug(...args: any[]) {
+    this.log(LogLevel.DEBUG, ...args)
+  }
+  warn(...args: any[]) {
+    this.log(LogLevel.WARN, ...args)
+  }
+  error(...args: any[]) {
+    this.log(LogLevel.ERROR, ...args)
   }
 }
-const info = (...args: any[]): void => {
-  log(LogLevel.INFO, ...args)
-}
 
-const debug = (...args: any[]): void => {
-  log(LogLevel.DEBUG, ...args)
-}
-
-const warn = (...args: any[]): void => {
-  log(LogLevel.WARN, ...args)
-}
-
-const error = (...args: any[]): void => {
-  log(LogLevel.ERROR, ...args)
-}
-export const XLog = {
-  info,
-  debug,
-  warn,
-  error
-}
-
-export const getPackageVersion = () => {
-  return version
-}
+export default new XterLog()

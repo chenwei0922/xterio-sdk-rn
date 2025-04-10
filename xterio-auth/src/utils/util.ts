@@ -1,4 +1,5 @@
 import type { ParsedQuery } from 'query-string'
+import pkg from '../../package.json'
 
 export const randomId = (): number => {
   const date = Date.now() * Math.pow(10, 3)
@@ -26,5 +27,6 @@ export const getQsParams = (key: string, obj: ParsedQuery) => {
 export const Utils = {
   randomId,
   randomNonceStr,
-  getQsParams
+  getQsParams,
+  pkgVersion: pkg.version
 }

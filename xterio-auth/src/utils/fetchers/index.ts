@@ -1,6 +1,6 @@
 import qs from 'query-string'
 import type { IResponse } from './interfaces'
-import { getPackageVersion, randomNonceStr, XLog, XTERIO_EVENTS } from '..'
+import { randomNonceStr, Utils, XLog, XTERIO_EVENTS } from '..'
 import { XterioAuthInfo, XterioAuthTokensManager } from '../../modules/XterAuthInfo'
 import { XterEventEmiter } from '../../modules/XterEventEmitter'
 
@@ -55,7 +55,7 @@ const fetcher = async <T>({ method, path, params, headers, data, Authorization }
     method,
     headers: {
       'Content-Type': 'application/json',
-      'X-SDK-Version': 'auth-' + getPackageVersion(),
+      'X-SDK-Version': 'auth-' + Utils.pkgVersion,
       'X-Platform': 'ReactNative',
       'X-App-ID': XterioAuthInfo.app_id,
       'X-Client-ID': XterioAuthInfo.client_id,

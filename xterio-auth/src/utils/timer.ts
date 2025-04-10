@@ -1,5 +1,4 @@
-import { XLog } from './logger'
-
+import { XLog } from '.'
 export class Singleton {
   private static instances: { [key: string]: any } = {}
   constructor() {

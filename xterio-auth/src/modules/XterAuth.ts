@@ -1,16 +1,7 @@
 import { decode } from 'js-base64'
 import { Env, LoginMethodType, LoginType, type ISSoTokensParams, type Payload } from '../interfaces/loginInfo'
 import NativeRnAuth from '../NativeRnAuth'
-import {
-  EnvVariableConfig,
-  getQsParams,
-  LoadingState,
-  setLogLevel,
-  XLog,
-  XTERIO_CONST,
-  XTERIO_EVENTS,
-  XTimeOut
-} from '../utils'
+import { EnvVariableConfig, getQsParams, LoadingState, XLog, XTERIO_CONST, XTERIO_EVENTS, XTimeOut } from '../utils'
 import { XterioAuthService } from './AuthService'
 import { XterioAuthInfo, XterioAuthTokensManager, XterioAuthUserInfoManager } from './XterAuthInfo'
 import { XterioCache } from './XterCache'
@@ -128,7 +119,7 @@ export class XterioAuth {
       logout = _env === Env.Dev ? '1' : '1',
       logLevel = 1
     } = config
-    setLogLevel(logLevel)
+    XLog.setLogLevel(logLevel)
     const _baseURL = EnvVariableConfig[_env].API_BASE
     const _config: ISSoTokensParams = {
       app_id,

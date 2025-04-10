@@ -1,4 +1,4 @@
-export * from './logger'
+export { default as XLog } from './logger'
 export * from './util'
 export * from './const'
 export * from './timer'
