@@ -1,13 +1,13 @@
-import { postFetcher, XterioAuthService } from "@xterio-sdk/rn-auth"
-import { Utils, XLog } from "../common/utils"
+import { postFetcher, XterioAuthService } from '@xterio-sdk/rn-auth';
+import { Utils, XLog } from '../common/utils';
 
 interface IBindPNWalletBody {
-  address: string
-  pn_uuid: string
-  pn_token: string
-  owner_address: string
-  wallet_name: string
-  wallet_version: string
+  address: string;
+  pn_uuid: string;
+  pn_token: string;
+  owner_address: string;
+  wallet_name: string;
+  wallet_version: string;
 }
 
 export class XterioWalletService extends XterioAuthService {
@@ -17,9 +17,9 @@ export class XterioWalletService extends XterioAuthService {
     pn_token,
     owner_address,
     wallet_name,
-    wallet_version
+    wallet_version,
   }: IBindPNWalletBody): Promise<{ error: boolean }> {
-    XLog.debug('bind aa wallet')
+    XLog.debug('bind aa wallet');
     const res = await postFetcher(
       `/account/v1/wallet/aa`,
       {
@@ -28,22 +28,22 @@ export class XterioWalletService extends XterioAuthService {
         pn_token,
         owner_address,
         wallet_version,
-        wallet_name
+        wallet_name,
       },
       '',
       {
-        'X-SDK-Version': 'wallet-' + Utils.pkgVersion
+        'X-SDK-Version': 'wallet-' + Utils.pkgVersion,
       }
     )
       .then(() => {
-        XLog.info('bind aa wallet success.')
-        return { error: false }
+        XLog.info('bind aa wallet success.');
+        return { error: false };
       })
       .catch(() => {
-        XLog.error('bind aa wallet failed.')
-        return { error: true }
-      })
+        XLog.error('bind aa wallet failed.');
+        return { error: true };
+      });
 
-    return res
+    return res;
   }
 }

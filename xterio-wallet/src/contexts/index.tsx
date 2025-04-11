@@ -45,16 +45,14 @@ const WalletContext = createContext<IWalletContextState>(
 
 const WalletContextProvider: React.FC<
   PropsWithChildren<IXterioWalletContextProps>
-> = ({ children, env, enableAuthInit = true, pn_app_id, ...rest }) => {
+> = ({ children, env, pn_app_id }) => {
   const envConfig = useConfig(env, pn_app_id);
-  const { isLogin, userinfo, idToken, login, logout } = useXterioAuthContext();
+  const { isLogin, userinfo, idToken } = useXterioAuthContext();
 
   const aaAddress = useMemo(
     () => userinfo?.wallet?.find((i) => i.source === 2)?.address || '',
-    []
+    [userinfo?.wallet]
   );
-
-  const [mounted, setMounted] = useState<boolean>();
 
   const {
     connectPnEoAAndAA,
@@ -132,7 +130,7 @@ const WalletContextProvider: React.FC<
       }
       await connectPnEoAAndAA(idToken, chainId);
     },
-    [connectPnEoAAndAA]
+    [connectPnEoAAndAA, idToken, isLogin]
   );
 
   // const disconnectWallet = useCallback(async () => {
@@ -140,40 +138,43 @@ const WalletContextProvider: React.FC<
   //   await disconnectPnEoA();
   // }, [disconnectPnEoA]);
 
-  const initLogic = useCallback(async (info?: IUserInfo) => {
-    const _addr = info?.wallet?.find((i) => i.source === 2)?.address || '';
-    const _uuid = info?.uuid;
-    const pn_jwt_id = _p?.jwt_id;
+  const initLogic = useCallback(
+    async (info?: IUserInfo) => {
+      const _addr = info?.wallet?.find((i) => i.source === 2)?.address || '';
+      const _uuid = info?.uuid;
+      const pn_jwt_id = _p?.jwt_id;
 
-    //1.当前用户无aa地址，上次登录用户有地址且pn已连接，断开连接
-    //2.当前用户有aa地址
-    //2.1 pn未连接，去连
-    //2.2 pn已连接，与上次登录用户不一致，断开重连
-    if (isLogin && _addr) {
-      XLog.debug('init logic', isPnLoginedRef.current, _uuid, pn_jwt_id);
-      if (!isPnLoginedRef.current) {
-        XLog.debug('init logic, reconnect wallet');
-        await connectWallet();
-      } else if (_uuid && pn_jwt_id && !pn_jwt_id.endsWith(_uuid)) {
+      //1.当前用户无aa地址，上次登录用户有地址且pn已连接，断开连接
+      //2.当前用户有aa地址
+      //2.1 pn未连接，去连
+      //2.2 pn已连接，与上次登录用户不一致，断开重连
+      if (isLogin && _addr) {
+        XLog.debug('init logic', isPnLoginedRef.current, _uuid, pn_jwt_id);
+        if (!isPnLoginedRef.current) {
+          XLog.debug('init logic, reconnect wallet');
+          await connectWallet();
+        } else if (_uuid && pn_jwt_id && !pn_jwt_id.endsWith(_uuid)) {
+          XLog.debug(
+            'init logic, aa address not equal, disconnect and reconnect'
+          );
+          // await disconnectWallet();
+          await connectWallet();
+        }
+      } else if (isLogin && !_addr && isPnLoginedRef.current) {
         XLog.debug(
-          'init logic, aa address not equal, disconnect and reconnect'
+          'init logic',
+          isPnLoginedRef.current,
+          'aa address is null only disconnect'
         );
         // await disconnectWallet();
-        await connectWallet();
       }
-    } else if (isLogin && !_addr && isPnLoginedRef.current) {
-      XLog.debug(
-        'init logic',
-        isPnLoginedRef.current,
-        'aa address is null only disconnect'
-      );
-      // await disconnectWallet();
-    }
-  }, []);
+    },
+    [_p?.jwt_id, connectWallet, isLogin]
+  );
 
   useEffect(() => {
     initLogic(userinfo);
-  }, [userinfo]);
+  }, [initLogic, userinfo]);
 
   useEffect(() => {
     if (!isLogin) {
@@ -204,14 +205,14 @@ const WalletContextProvider: React.FC<
 export const XterioWalletProvider: React.FC<
   PropsWithChildren<IXterioWalletContextProps>
 > = (props) => {
-  const { pn_app_id } = props;
-  if (!pn_app_id) {
-    throw new Error('You must set pn_app_id');
-  }
+  // const { pn_app_id } = props;
+  // if (!pn_app_id) {
+  //   throw new Error('You must set pn_app_id');
+  // }
 
   return (
     <XterioAuthProvider {...props}>
-      <WalletContextProvider {...props}></WalletContextProvider>
+      <WalletContextProvider {...props} />
     </XterioAuthProvider>
   );
 };

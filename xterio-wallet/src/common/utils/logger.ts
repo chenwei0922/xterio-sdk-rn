@@ -1,13 +1,13 @@
-import { XterLog } from "@xterio-sdk/rn-auth";
-import { Utils } from "./util";
+import { XterLog } from '@xterio-sdk/rn-auth';
+import { Utils } from './util';
 
 class XLog extends XterLog {
   getName(): string {
-    return 'XterioWallet'
+    return 'XterioWallet';
   }
   getVersion(): string {
-    return Utils.pkgVersion
+    return Utils.pkgVersion;
   }
 }
 
-export default new XLog()
+export default new XLog();

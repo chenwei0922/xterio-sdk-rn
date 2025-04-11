@@ -93,6 +93,13 @@
     "react": "*",
     "react-native": "*"
   },
+  "dependencies": {
+    "@particle-network/rn-aa": "2.0.6",
+    "@particle-network/rn-auth-core": "2.0.6",
+    "@particle-network/rn-base": "2.0.6",
+    "@xterio-sdk/rn-auth": "^0.1.4",
+    "ethers": "5.7.2"
+  },
   "workspaces": [
     "example"
   ],
@@ -177,12 +184,5 @@
     "type": "turbo-module",
     "languages": "kotlin-objc",
     "version": "0.49.1"
-  },
-  "dependencies": {
-    "@particle-network/rn-aa": "2.0.6",
-    "@particle-network/rn-auth-core": "2.0.6",
-    "@particle-network/rn-base": "2.0.6",
-    "@xterio-sdk/rn-auth": "file:../xterio-auth",
-    "ethers": "5.7.2"
   }
 }

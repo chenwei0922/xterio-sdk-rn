@@ -84,7 +84,17 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        // pn setup
+        manifestPlaceholders["PN_PROJECT_ID"] = "63afedf8-0ebc-4474-b911-45f22dd0f4d2"
+        manifestPlaceholders["PN_PROJECT_CLIENT_KEY"] = "c9ZWwJOsJUTJjmMWajCL9hcMqczgS19U5RfEvwlD"
+        manifestPlaceholders["PN_APP_ID"] = "999c651d-ea3d-4660-8c01-5b4df368135f"
     }
+
+    //pn setup
+    dataBinding {
+        enabled = true
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')

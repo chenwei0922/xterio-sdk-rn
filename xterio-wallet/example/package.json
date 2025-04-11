@@ -14,6 +14,9 @@
     "build:ios": "react-native build-ios --scheme RnWalletExample --mode Debug --extra-params \"-sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO\""
   },
   "dependencies": {
+    "@particle-network/rn-auth-core": "^2.0.6",
+    "@particle-network/rn-base": "^2.0.6",
+    "@xterio-sdk/rn-auth": "^0.1.4",
     "react": "19.0.0",
     "react-native": "0.78.2"
   },

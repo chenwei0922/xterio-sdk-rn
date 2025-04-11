@@ -1,6 +1,6 @@
 {
   "name": "@xterio-sdk/rn-auth",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "xterio auth service in react native",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",

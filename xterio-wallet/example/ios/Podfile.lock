@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.9.1)
-  - AuthCoreAdapter (2.0.9):
+  - AuthCoreAdapter (1.4.11):
     - ConnectCommon
     - ParticleAuthCore
   - AWSCore (2.34.2)
@@ -10,7 +10,7 @@ PODS:
     - BigInt
   - BigInt (5.2.0)
   - boost (1.84.0)
-  - ConnectCommon (2.0.8):
+  - ConnectCommon (0.2.24):
     - BigInt (~> 5.2.0)
     - ParticleNetworkBase
     - RxAlamofire (~> 6.1.1)
@@ -37,7 +37,7 @@ PODS:
   - libwebp/sharpyuv (1.5.0)
   - libwebp/webp (1.5.0):
     - libwebp/sharpyuv
-  - ParticleAuthCore (2.0.9):
+  - ParticleAuthCore (1.4.11):
     - AWSKMS (~> 2.34.2)
     - ParticleMPCCore
     - ParticleNetworkBase
@@ -47,22 +47,20 @@ PODS:
     - SnapKit (~> 5.7.1)
     - SwiftMessages
     - Then
-  - ParticleMPCCore (2.0.9):
+  - ParticleMPCCore (1.4.11):
     - Base58.swift
     - CryptoSwift (~> 1.8.1)
     - Thresh
-  - ParticleNetworkBase (2.0.9):
+  - ParticleNetworkBase (1.4.10):
     - Alamofire (~> 5.9.0)
     - Base58.swift
     - BigInt (~> 5.2.0)
     - CryptoSwift (~> 1.8.1)
-    - ParticleNetworkChains
     - RxAlamofire (~> 6.1.1)
-    - RxCocoa (= 6.8.0)
-    - RxSwift (= 6.8.0)
+    - RxCocoa (= 6.6.0)
+    - RxSwift (= 6.6.0)
     - SwiftyJSON (~> 5.0.1)
     - SwiftyUserDefaults (~> 5.3.0)
-  - ParticleNetworkChains (2.0.8)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -1606,12 +1604,12 @@ PODS:
   - RxAlamofire/Core (6.1.1):
     - Alamofire (~> 5.4)
     - RxSwift (~> 6.0)
-  - RxCocoa (6.8.0):
-    - RxRelay (= 6.8.0)
-    - RxSwift (= 6.8.0)
-  - RxRelay (6.8.0):
-    - RxSwift (= 6.8.0)
-  - RxSwift (6.8.0)
+  - RxCocoa (6.6.0):
+    - RxRelay (= 6.6.0)
+    - RxSwift (= 6.6.0)
+  - RxRelay (6.6.0):
+    - RxSwift (= 6.6.0)
+  - RxSwift (6.6.0)
   - SDWebImage (5.19.7):
     - SDWebImage/Core (= 5.19.7)
   - SDWebImage/Core (5.19.7)
@@ -1628,24 +1626,23 @@ PODS:
   - SwiftyJSON (5.0.2)
   - SwiftyUserDefaults (5.3.0)
   - Then (3.0.0)
-  - Thresh (2.0.9)
+  - Thresh (1.4.11)
   - TweetNacl (1.0.2)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
-  - AuthCoreAdapter
+  - AuthCoreAdapter (= 1.4.11)
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
-  - ConnectCommon
+  - ConnectCommon (= 0.2.24)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - fast_float (from `../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
-  - ParticleAuthCore
-  - ParticleMPCCore
-  - ParticleNetworkBase
-  - ParticleNetworkChains
+  - ParticleAuthCore (= 1.4.11)
+  - ParticleMPCCore (= 1.4.11)
+  - ParticleNetworkBase (= 1.4.10)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -1709,7 +1706,7 @@ DEPENDENCIES:
   - RnWallet (from `../..`)
   - SkeletonView (from `https://github.com/SunZhiC/SkeletonView.git`, branch `main`)
   - SwiftyUserDefaults (from `https://github.com/SunZhiC/SwiftyUserDefaults.git`, branch `master`)
-  - Thresh
+  - Thresh (= 1.4.11)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1726,7 +1723,6 @@ SPEC REPOS:
     - ParticleAuthCore
     - ParticleMPCCore
     - ParticleNetworkBase
-    - ParticleNetworkChains
     - RxAlamofire
     - RxCocoa
     - RxRelay
@@ -1895,13 +1891,13 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
-  AuthCoreAdapter: e2ce95025906111e39ae98bf8b50ccd0b19dbb0a
+  AuthCoreAdapter: aa7d0173ba7f98a8a95f960903b3c5077b069248
   AWSCore: 13649d9063a6807ec37bde35c8f2da329d63d4e2
   AWSKMS: 311bb0cb71967273de5f4657875b9f2484ec13c2
   Base58.swift: e0e16655f9db843b8cd367593ed6f7d90d136b7f
   BigInt: f668a80089607f521586bbe29513d708491ef2f7
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
-  ConnectCommon: 2cab474488181e12aef536418c876486ecb77e06
+  ConnectCommon: d968bccfa0d2e6087e07a82d9da603a46d6836e7
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
@@ -1910,10 +1906,9 @@ SPEC CHECKSUMS:
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
-  ParticleAuthCore: abd610b617cf5650ab2c2f160b76a968c9382f18
-  ParticleMPCCore: a73715b917f3ea28974b198ec9ae53be4819ff45
-  ParticleNetworkBase: 5ce24e26efda2e0503732a3f5cec7a51e3d22219
-  ParticleNetworkChains: 4a0591e63bd32214e875cc5906abdedbdc262cba
+  ParticleAuthCore: 96548b5844eadeb4d63e138c3383b8b5af396f85
+  ParticleMPCCore: 7930476dd1da4d19ece55ec5130487b2c07ea860
+  ParticleNetworkBase: 98c7ef521e6ec3db98eff9369e264d69897f265f
   RCT-Folly: 36fe2295e44b10d831836cc0d1daec5f8abcf809
   RCTDeprecation: be794de7dc6ed8f9f7fbf525f86e7651b8b68746
   RCTRequired: a83787b092ec554c2eb6019ff3f5b8d125472b3b
@@ -1974,9 +1969,9 @@ SPEC CHECKSUMS:
   ReactCommon: 547db015202a80a5b3e7e041586ea54c4a087180
   RnWallet: 2735f42611df6131bc234dfa8682bcfdc976194b
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
-  RxCocoa: 2d33c1e1e5d66492052ad46b11024ae287572880
-  RxRelay: 335c78b926a2aea8d863a6d25f1ed3b5ad8e8705
-  RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
+  RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
+  RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
@@ -1987,10 +1982,10 @@ SPEC CHECKSUMS:
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
   SwiftyUserDefaults: dd5dce66fb01565a82c3618b835f0546987eb683
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
-  Thresh: e5466333d64cbb1e15866091d44c8df810edd88e
+  Thresh: 213a087253919fc037e58e3c7b68bc1f6c89d18e
   TweetNacl: 3abf4d1d2082b0114e7a67410e300892448951e6
   Yoga: 66a9a23a82dd4081b393babe509967097759b3d6
 
-PODFILE CHECKSUM: 0290ee0c7f3ff484c71b334d0ea5678040b4d4fd
+PODFILE CHECKSUM: bf558c271d21e2c8babe7d4e00ade7856a679434
 
 COCOAPODS: 1.15.2
