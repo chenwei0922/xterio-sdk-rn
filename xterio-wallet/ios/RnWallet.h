@@ -1,5 +1,5 @@
 
-#import "generated/RNRnWalletSpec/RNRnWalletSpec.h"
+#import <RnWallet/RNRnWalletSpec.h>
 
 @interface RnWallet : NSObject <NativeRnWalletSpec>
 

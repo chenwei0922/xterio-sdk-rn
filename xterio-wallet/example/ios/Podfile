@@ -25,36 +25,16 @@ target 'RnWalletExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  target 'RnWalletExampleTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
 
   # Run Codegen during development for the example app.
   pre_install do |installer|
     system("cd ../../ && npx bob build --target codegen")
   end
-
-  # pn setup
-  pod "Thresh", '1.4.11'
-  pod "ParticleMPCCore", '1.4.11'
-  pod "ParticleAuthCore", '1.4.11'
-  pod "AuthCoreAdapter", '1.4.11'
-
-  pod 'ParticleNetworkBase', '1.4.10'
-  pod 'ConnectCommon',  '0.2.24'
-
-  pod 'SwiftyUserDefaults', :git =>'https://github.com/SunZhiC/SwiftyUserDefaults.git', :branch =>'master'
-  pod 'SkeletonView', :git =>'https://github.com/SunZhiC/SkeletonView.git', :branch =>'main'
-
-  # pod 'Thresh'
-  # pod 'ParticleMPCCore'
-  # pod 'ParticleAuthCore'
-  # pod 'AuthCoreAdapter'
-
-  # pod 'ParticleNetworkBase'
-  # pod 'ParticleNetworkChains'
-  # pod 'ConnectCommon'
-
-  # pod 'SwiftyUserDefaults', :git => 'https://github.com/SunZhiC/SwiftyUserDefaults.git', :branch => 'master'
-  # pod 'SkeletonView', :git => 'https://github.com/SunZhiC/SkeletonView.git', :branch => 'main'
-  # # pod 'WalletConnectSwiftV2', :git => 'https://github.com/SunZhiC/WalletConnectSwiftV2.git', :branch => 'particle'
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
@@ -64,21 +44,5 @@ target 'RnWalletExample' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
-    # 配置pn
-    installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |config|
-        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-        # config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
-      end
-    end
-
-    # installer.target_installation_results.pod_target_installation_results.each do | pod_name, target_installation_result|
-    #   target_installation_result.resource_bundle_targets.each do |resource_bundle_target|
-    #     resource_bundle_target.build_configurations.each do |config|
-    #       config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
-    #     end
-    #   end
-    # end
-
   end
 end

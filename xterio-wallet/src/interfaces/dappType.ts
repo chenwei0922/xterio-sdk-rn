@@ -5,25 +5,8 @@ import type {
   ContractTransaction,
 } from 'ethers';
 
-export type TransactionState =
-  | 'None'
-  | 'PendingSignature'
-  | 'Mining'
-  | 'Success'
-  | 'Fail'
-  | 'Exception'
-  | 'CollectingSignaturePool';
+export type { LogDescription } from 'ethers/lib/utils';
 
-export interface TransactionOptions {
-  gasLimit: BigNumberish;
-  txValue?: BigNumberish;
-  feeData?: {
-    lastBaseFeePerGas: null | BigNumber;
-    maxFeePerGas: null | BigNumber;
-    maxPriorityFeePerGas: null | BigNumber;
-    gasPrice: null | BigNumber;
-  };
-}
 export interface Log {
   blockNumber: number;
   blockHash: string;
@@ -40,55 +23,12 @@ export interface Log {
   logIndex: number;
 }
 
-export interface TransactionReceipt {
-  to: string;
-  from: string;
-  contractAddress: string;
-  transactionIndex: number;
-  root?: string;
-  gasUsed: BigNumber;
-  logsBloom: string;
-  blockHash: string;
-  transactionHash: string;
-  logs: Array<Log>;
-  blockNumber: number;
-  confirmations: number;
-  cumulativeGasUsed: BigNumber;
-  effectiveGasPrice: BigNumber;
-  byzantium: boolean;
-  type: number;
-  status?: number;
-}
-
-export type AccessList = Array<{ address: string; storageKeys: Array<string> }>;
-
 export interface Transaction {
-  hash?: string;
-
-  to?: string;
-  from?: string;
-  nonce: number;
-
-  gasLimit: BigNumber;
-  gasPrice?: BigNumber;
-
-  data: string;
-  value: BigNumber;
-  chainId: number;
-
-  r?: string;
-  s?: string;
-  v?: number;
-
-  // Typed-Transaction features
-  type?: number | null;
-
-  // EIP-2930; Type 1 & EIP-1559; Type 2
-  accessList?: AccessList;
-
-  // EIP-1559; Type 2
-  maxPriorityFeePerGas?: BigNumber;
-  maxFeePerGas?: BigNumber;
+  to: string;
+  value?: string;
+  data?: string;
+  nonce?: number | string;
+  gasLimit?: number | string;
 }
 
 export interface TransactionResponse extends Transaction {
@@ -109,6 +49,26 @@ export interface TransactionResponse extends Transaction {
 
   // This function waits until the transaction has been mined
   wait: (confirmations?: number) => Promise<TransactionReceipt>;
+}
+
+export type TransactionState =
+  | 'None'
+  | 'PendingSignature'
+  | 'Mining'
+  | 'Success'
+  | 'Fail'
+  | 'Exception'
+  | 'CollectingSignaturePool';
+
+export interface TransactionOptions {
+  gasLimit: BigNumberish;
+  txValue?: BigNumberish;
+  feeData?: {
+    lastBaseFeePerGas: null | BigNumber;
+    maxFeePerGas: null | BigNumber;
+    maxPriorityFeePerGas: null | BigNumber;
+    gasPrice: null | BigNumber;
+  };
 }
 
 export interface TransactionStatus {
@@ -147,6 +107,26 @@ export interface TransactionStatus {
   transactionName?: string;
 }
 
+export interface TransactionReceipt {
+  to: string;
+  from: string;
+  contractAddress: string;
+  transactionIndex: number;
+  root?: string;
+  gasUsed: BigNumber;
+  logsBloom: string;
+  blockHash: string;
+  transactionHash: string;
+  logs: Array<Log>;
+  blockNumber: number;
+  confirmations: number;
+  cumulativeGasUsed: BigNumber;
+  effectiveGasPrice: BigNumber;
+  byzantium: boolean;
+  type: number;
+  status?: number;
+}
+
 export type Falsy = false | 0 | '' | null | undefined;
 
 export type TypedContract = Contract & {
@@ -176,5 +156,3 @@ export type Params<
   T extends TypedContract,
   FN extends ContractFunctionNames<T> | ContractMethodNames<T>,
 > = Parameters<T['functions'][FN]>;
-
-export type { LogDescription } from 'ethers/lib/utils';

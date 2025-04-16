@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import * as particleAuthCore from '@particle-network/rn-auth-core';
 import * as particleBase from '@particle-network/rn-base';
+import * as particleAA from '@particle-network/rn-aa';
 import { chains, Ethereum, type ChainInfo } from '@particle-network/chains';
-import { evm } from '@particle-network/rn-auth-core';
+import { evm, type CommonError } from '@particle-network/rn-auth-core';
 import { EvmService, type UserInfo } from '@particle-network/rn-base';
+import { XLog } from '../common/utils';
 
 export const useConnect = () => {
   const [connected, setConnected] = useState(false);
 
   const checkConnectStatus = useCallback(async () => {
     const _f = await particleAuthCore.isConnected();
+    XLog.debug('[useConnect] isconnect=', _f);
     setConnected(_f);
     return _f;
   }, []);
@@ -25,8 +28,7 @@ export const useConnect = () => {
   );
 
   const disconnect = useCallback(async () => {
-    await particleAuthCore.disconnect();
-    await checkConnectStatus();
+    particleAuthCore.disconnect().finally(checkConnectStatus);
   }, [checkConnectStatus]);
 
   useEffect(() => {
@@ -52,6 +54,14 @@ export const useEthereum = () => {
 
     const _addr = await evm.getAddress();
     setAddress(_addr);
+
+    XLog.debug(
+      '[useEthereum] chain=',
+      _info.id,
+      _info.name,
+      'eoa_address=',
+      _addr
+    );
   }, []);
 
   const switchChain = useCallback(
@@ -64,6 +74,26 @@ export const useEthereum = () => {
     [allChains, refreshAddress]
   );
 
+  const signMessage = useCallback(
+    (message: string, uniq?: boolean): Promise<string> => {
+      // { "redirect_type": "", "signature": "0x0ddbdc76b9daa4680d496eb7321f5326b79b7f0c4f875219edd96dbb0aa5d023296e22b31d48eba1ba88ef35b98993993b7b6b18734ed6f06c58d2044a8373931b" }
+      // { "code": 70001, "message": "User cancel" }
+      return new Promise((resolve, reject) => {
+        (uniq ? evm.personalSignUnique(message) : evm.personalSign(message))
+          .then((res) => {
+            const result = (res as any)?.signature || '';
+            XLog.debug('[useEthereum] sign message success:', result);
+            resolve(result as string);
+          })
+          .catch((err: CommonError) => {
+            XLog.debug('[useEthereum] sign message error:', err);
+            reject(err);
+          });
+      });
+    },
+    []
+  );
+
   useEffect(() => {
     refreshAddress();
   }, [refreshAddress]);
@@ -73,6 +103,7 @@ export const useEthereum = () => {
     chainInfo,
     address,
     switchChain,
+    signMessage,
   };
 };
 
@@ -80,12 +111,18 @@ export const useAuthCore = () => {
   const [userInfo, setUserInfo] = useState<UserInfo | undefined>(undefined);
 
   useEffect(() => {
+    XLog.debug('[useAuthCore] userinfo=', userInfo);
+  }, [userInfo]);
+
+  useEffect(() => {
     particleAuthCore.getUserInfo().then((res) => {
       setUserInfo(res);
     });
   }, []);
 
-  const openWallet = useCallback(() => { }, []);
+  const openWallet = useCallback(() => {
+    particleAuthCore.openAccountAndSecurity();
+  }, []);
 
   return {
     userInfo,

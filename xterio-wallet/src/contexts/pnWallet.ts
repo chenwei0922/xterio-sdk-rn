@@ -4,7 +4,6 @@ import { ParticleInfo, Env } from '@particle-network/rn-base';
 import * as particleAA from '@particle-network/rn-aa';
 
 import { Ethereum } from '@particle-network/chains';
-import type { IUseConfigState } from './useConfig';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { XLog } from '../common/utils';
 import aaOptions from '../common/config/erc4337';
@@ -16,11 +15,35 @@ import {
   useEthereum,
 } from './authkit';
 
-export const usePnWallet = (env: IUseConfigState, init_address?: string) => {
+type PnUserInfoType = particleAuthCore.UserInfo | undefined;
+interface IPnWalletState {
+  isLogin: boolean;
+  pnUserInfo: PnUserInfoType;
+  pnEoaAddress: string;
+  pnAAWalletAddress: string | undefined;
+  connectPnEoA: (jwt?: string, _chainId?: number) => Promise<PnUserInfoType>;
+  connectPnAA: (
+    _chainId?: number,
+    _eoaAddress?: string
+  ) => Promise<{
+    aaAddress?: string;
+    eoaAddress?: string;
+    name?: string;
+    version?: string;
+  }>;
+  connectPnEoAAndAA: (jwt?: string, _chainId?: number) => Promise<void>;
+  disconnectPnEoA: () => Promise<void>;
+  switchChain: (id: number) => Promise<void>;
+  openWallet: () => void;
+  signMessage: (message: string, uniq?: boolean) => Promise<string>;
+}
+
+export const usePnWallet = (): IPnWalletState => {
   const { connected, connect, disconnect } = useConnect();
-  const { chainInfo, address, chains, switchChain } = useEthereum();
+  const { chainInfo, address, chains, switchChain, signMessage } =
+    useEthereum();
   const { erc4337, setERC4337 } = useCustomize();
-  const { userInfo } = useAuthCore();
+  const { userInfo, openWallet } = useAuthCore();
 
   const [mouted, setMounted] = useState(false);
   const [pnAAWalletAddress, setPnAAWalletAddress] = useState<
@@ -58,9 +81,9 @@ export const usePnWallet = (env: IUseConfigState, init_address?: string) => {
     async (jwt?: string, _chainId?: number) => {
       const targetChain = chains?.find((c) => c.id === _chainId);
       const res = await connect({ chain: targetChain, jwt })
-        .then((userInfo) => {
+        .then((info) => {
           XLog.info('connect pn eoa success');
-          return userInfo;
+          return info;
         })
         .catch((error: Error) => {
           XLog.error('connect pn eoa error', error, targetChain, chains);
@@ -95,7 +118,7 @@ export const usePnWallet = (env: IUseConfigState, init_address?: string) => {
           });
         return {
           aaAddress,
-          eoaAddress: _eoaAddress || address || init_address || '',
+          eoaAddress: _eoaAddress || address || '',
           ...erc4337Config,
         };
       } else {
@@ -103,7 +126,7 @@ export const usePnWallet = (env: IUseConfigState, init_address?: string) => {
         return {};
       }
     },
-    [aaNetworkConfig, address, chainInfo.id, erc4337, erc4337On, init_address]
+    [aaNetworkConfig, address, chainInfo.id, erc4337, erc4337On]
   );
 
   const connectPnEoAAndAA = useCallback(
@@ -127,21 +150,22 @@ export const usePnWallet = (env: IUseConfigState, init_address?: string) => {
     ParticleInfo.projectId = '63afedf8-0ebc-4474-b911-45f22dd0f4d2';
     ParticleInfo.clientKey = 'c9ZWwJOsJUTJjmMWajCL9hcMqczgS19U5RfEvwlD';
 
-    if (ParticleInfo.projectId == '' || ParticleInfo.clientKey == '') {
+    if (ParticleInfo.projectId === '' || ParticleInfo.clientKey === '') {
       throw new Error(
         'You need set project info, get your project id and client from dashboard, https://dashboard.particle.network'
       );
     }
 
-    const chainInfo = Ethereum;
+    const chain = Ethereum;
     const env = Env.Dev;
-    particleBase.init(chainInfo, env);
+    particleBase.init(chain, env);
     particleAuthCore.init();
 
     particleAA.init({
       name: 'XTERIO',
       version: '1.0.0',
     });
+    particleAA.enableAAMode();
   }, []);
 
   useEffect(() => {
@@ -154,12 +178,14 @@ export const usePnWallet = (env: IUseConfigState, init_address?: string) => {
   return {
     isLogin: !!connected,
     pnUserInfo: userInfo,
-    eoaAddress: address || '',
+    pnEoaAddress: address || '',
     pnAAWalletAddress,
     connectPnEoA,
     connectPnAA,
     connectPnEoAAndAA,
     disconnectPnEoA: disconnect,
     switchChain,
+    openWallet,
+    signMessage,
   };
 };

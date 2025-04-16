@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "pod-backup": "cp ../RnWallet.podspec ../RnWallet.podspec.bak",
-    "pod-restore": "mv ../RnWallet.podspec.bak ../RnWallet.podspec",
-    "pod-install": "yarn pod-backup && cd ios && bundle install && bundle exec pod install && cd .. && yarn pod-restore",
-    "gradlew": "cd android && ./gradlew generateCodegenArtifactsFromSchema && cd ..",
+    "postinstall": "patch-package",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -14,11 +11,13 @@
     "build:ios": "react-native build-ios --scheme RnWalletExample --mode Debug --extra-params \"-sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO\""
   },
   "dependencies": {
-    "@particle-network/rn-auth-core": "^2.0.6",
-    "@particle-network/rn-base": "^2.0.6",
-    "@xterio-sdk/rn-auth": "^0.1.4",
-    "react": "19.0.0",
-    "react-native": "0.78.2"
+    "@particle-network/rn-aa": "2.0.6",
+    "@particle-network/rn-auth-core": "2.0.6",
+    "@particle-network/rn-base": "2.0.6",
+    "@xterio-sdk/rn-auth": "0.1.4-p",
+    "@xterio-sdk/rn-wallet": "file:..",
+    "react": "18.3.1",
+    "react-native": "0.76.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -27,11 +26,12 @@
     "@react-native-community/cli": "15.0.1",
     "@react-native-community/cli-platform-android": "15.0.1",
     "@react-native-community/cli-platform-ios": "15.0.1",
-    "@react-native/babel-preset": "0.78.2",
-    "@react-native/metro-config": "0.78.2",
-    "@react-native/typescript-config": "0.78.2",
-    "@types/react": "^19.0.0",
-    "react-native-builder-bob": "^0.39.1"
+    "@react-native/babel-preset": "0.76.5",
+    "@react-native/metro-config": "0.76.5",
+    "@react-native/typescript-config": "0.76.5",
+    "@types/react": "^18.2.6",
+    "patch-package": "^8.0.0",
+    "react-native-builder-bob": "^0.40.5"
   },
   "engines": {
     "node": ">=18"

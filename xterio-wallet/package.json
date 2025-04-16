@@ -3,18 +3,12 @@
   "version": "0.1.0",
   "description": "xterio wallet service in react native",
   "source": "./src/index.tsx",
-  "main": "./lib/commonjs/index.js",
-  "module": "./lib/module/index.js",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./lib/typescript/module/src/index.d.ts",
-        "default": "./lib/module/index.js"
-      },
-      "require": {
-        "types": "./lib/typescript/commonjs/src/index.d.ts",
-        "default": "./lib/commonjs/index.js"
-      }
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -74,7 +68,7 @@
     "@react-native/eslint-config": "^0.78.0",
     "@release-it/conventional-changelog": "^9.0.2",
     "@types/jest": "^29.5.5",
-    "@types/react": "^19.0.0",
+    "@types/react": "^18.2.6",
     "commitlint": "^19.6.1",
     "del-cli": "^5.1.0",
     "eslint": "^9.22.0",
@@ -82,14 +76,15 @@
     "eslint-plugin-prettier": "^5.2.3",
     "jest": "^29.7.0",
     "prettier": "^3.0.3",
-    "react": "19.0.0",
-    "react-native": "0.78.2",
-    "react-native-builder-bob": "^0.39.1",
+    "react": "18.3.1",
+    "react-native": "0.76.5",
+    "react-native-builder-bob": "^0.40.5",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
+    "@xterio-sdk/rn-auth": "*",
     "react": "*",
     "react-native": "*"
   },
@@ -97,13 +92,8 @@
     "@particle-network/rn-aa": "2.0.6",
     "@particle-network/rn-auth-core": "2.0.6",
     "@particle-network/rn-base": "2.0.6",
-    "@xterio-sdk/rn-auth": "^0.1.4",
-    "ethers": "5.7.2"
+    "ethers": "^5.7.2"
   },
-  "workspaces": [
-    "example"
-  ],
-  "packageManager": "yarn@3.6.1",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
@@ -154,12 +144,6 @@
         }
       ],
       [
-        "commonjs",
-        {
-          "esm": true
-        }
-      ],
-      [
         "typescript",
         {
           "project": "tsconfig.build.json"
@@ -183,6 +167,6 @@
   "create-react-native-library": {
     "type": "turbo-module",
     "languages": "kotlin-objc",
-    "version": "0.49.1"
+    "version": "0.49.7"
   }
 }
