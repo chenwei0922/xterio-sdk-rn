@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import * as particleAuthCore from '@particle-network/rn-auth-core';
 import * as particleBase from '@particle-network/rn-base';
-import * as particleAA from '@particle-network/rn-aa';
-import { chains, Ethereum, type ChainInfo } from '@particle-network/chains';
+import {
+  chains,
+  Ethereum,
+  type ChainId,
+  type ChainInfo,
+} from '@particle-network/chains';
 import { evm, type CommonError } from '@particle-network/rn-auth-core';
 import { EvmService, type UserInfo } from '@particle-network/rn-base';
 import { XLog } from '../common/utils';
+import { ethers } from 'ethers';
 
 export const useConnect = () => {
   const [connected, setConnected] = useState(false);
@@ -42,19 +47,36 @@ export const useConnect = () => {
   };
 };
 
+const cacheProvider: Map<ChainId, Provider> = new Map();
+
 export const useEthereum = () => {
   const [chainInfo, setChainInfo] = useState(Ethereum);
   const [address, setAddress] = useState<string | null>(null);
+  const [provider, setProvider] = useState<Provider>();
+  const [chainId, setChainId] = useState<number>();
 
   const allChains = useMemo(() => chains.getAllChainInfos(), []);
 
   const refreshAddress = useCallback(async () => {
     const _info = await particleBase.getChainInfo();
     setChainInfo(_info);
+    setChainId(_info.id);
 
     const _addr = await evm.getAddress();
     setAddress(_addr);
 
+    const _chain_id = _info.id;
+    if (Object.keys(rpcs).includes(_chain_id.toString())) {
+      if (!cacheProvider.get(_chain_id)) {
+        cacheProvider.set(
+          _chain_id,
+          new ethers.providers.JsonRpcProvider(rpcs[_chain_id])
+        );
+      }
+      setProvider(cacheProvider.get(_chain_id));
+    } else {
+      setProvider(undefined);
+    }
     XLog.debug(
       '[useEthereum] chain=',
       _info.id,
@@ -101,6 +123,8 @@ export const useEthereum = () => {
   return {
     chains: allChains,
     chainInfo,
+    chainId,
+    provider,
     address,
     switchChain,
     signMessage,
@@ -167,3 +191,21 @@ export const getEVMPublicAddress = async ({
   const result = await EvmService.getSmartAccount([smartAccountParam]);
   return result?.[0]?.smartAccountAddress || '';
 };
+
+const rpcs: Record<number, string> = {
+  1: `https://ethereum.publicnode.com`,
+  42161: `https://arbitrum-one.publicnode.com`,
+  137: `https://polygon-bor.publicnode.com`,
+  204: `https://opbnb-mainnet-rpc.bnbchain.org`,
+  56: 'https://bsc-dataseed.bnbchain.org',
+  112358: `https://xterio-bnb.alt.technology`,
+  2702128: `https://xterio-eth.alt.technology`,
+  8453: `https://mainnet.base.org`,
+  97: 'https://bsc-testnet-rpc.publicnode.com',
+  // return 'https://data-seed-prebsc-2-s1.binance.org:8545'
+  5: 'https://eth-goerli.public.blastapi.io',
+  11155111: `https://ethereum-sepolia-rpc.publicnode.com`,
+  5611: `https://opbnb-testnet-rpc.bnbchain.org`,
+  1637450: `https://xterio-testnet.alt.technology/`,
+};
+export type Provider = ethers.providers.JsonRpcProvider;

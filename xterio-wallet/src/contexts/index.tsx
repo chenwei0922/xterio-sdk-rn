@@ -10,7 +10,7 @@ import {
 import type { IXterioWalletContextProps } from '../interfaces/types';
 
 import { XLog } from '../common/utils';
-import { usePnWallet } from './pnWallet';
+import { usePnWallet, type IPnWalletState } from './pnWallet';
 import {
   XterEventEmiter,
   XTERIO_EVENTS,
@@ -30,7 +30,8 @@ const initState = {
   obtainWallet: () => {},
 };
 
-interface IWalletContextState {
+interface IWalletContextState
+  extends Pick<IPnWalletState, 'provider' | 'signMessage'> {
   eoaAddress: string;
   aaAddress: string;
   isConnect: boolean;
@@ -39,7 +40,6 @@ interface IWalletContextState {
   disconnectWallet(): Promise<void>;
   obtainWallet(): Promise<void>;
   switchChain(id: number): Promise<void>;
-  signMessage(message: string, uniq?: boolean): Promise<string>;
   envConfig?: IUseConfigState;
 }
 
@@ -65,6 +65,7 @@ const WalletContextProvider: React.FC<
     pnUserInfo: _p,
     isLogin: isPnLogin,
     pnEoaAddress,
+    provider,
     openWallet,
     signMessage,
     // signTypedData,
@@ -216,6 +217,7 @@ const WalletContextProvider: React.FC<
         envConfig,
         openWallet,
         signMessage,
+        provider,
         // signTypedData,
         // pnAA,
         // envConfig,

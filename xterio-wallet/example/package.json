@@ -15,7 +15,7 @@
     "@particle-network/rn-auth-core": "2.0.6",
     "@particle-network/rn-base": "2.0.6",
     "@xterio-sdk/rn-auth": "0.1.4-p",
-    "@xterio-sdk/rn-wallet": "file:..",
+    "@xterio-sdk/rn-wallet": "workspace:*",
     "react": "18.3.1",
     "react-native": "0.76.5"
   },

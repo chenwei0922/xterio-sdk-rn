@@ -27,5 +27,5 @@ export const Utils = {
   randomId,
   randomNonceStr,
   getQsParams,
-  pkgVersion: '0.1.4'
+  pkgVersion: '0.1.5'
 }

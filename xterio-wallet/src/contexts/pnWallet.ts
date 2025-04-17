@@ -13,14 +13,16 @@ import {
   useConnect,
   useCustomize,
   useEthereum,
+  type Provider,
 } from './authkit';
 
 type PnUserInfoType = particleAuthCore.UserInfo | undefined;
-interface IPnWalletState {
+export interface IPnWalletState {
   isLogin: boolean;
   pnUserInfo: PnUserInfoType;
   pnEoaAddress: string;
   pnAAWalletAddress: string | undefined;
+  provider: Provider;
   connectPnEoA: (jwt?: string, _chainId?: number) => Promise<PnUserInfoType>;
   connectPnAA: (
     _chainId?: number,
@@ -40,7 +42,7 @@ interface IPnWalletState {
 
 export const usePnWallet = (): IPnWalletState => {
   const { connected, connect, disconnect } = useConnect();
-  const { chainInfo, address, chains, switchChain, signMessage } =
+  const { chainInfo, address, chains, provider, switchChain, signMessage } =
     useEthereum();
   const { erc4337, setERC4337 } = useCustomize();
   const { userInfo, openWallet } = useAuthCore();
@@ -180,6 +182,7 @@ export const usePnWallet = (): IPnWalletState => {
     pnUserInfo: userInfo,
     pnEoaAddress: address || '',
     pnAAWalletAddress,
+    provider,
     connectPnEoA,
     connectPnAA,
     connectPnEoAAndAA,

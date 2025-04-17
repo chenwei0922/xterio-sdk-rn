@@ -7,6 +7,14 @@ import type {
 
 export type { LogDescription } from 'ethers/lib/utils';
 
+export interface TransactionParam {
+  to: string;
+  value?: string;
+  data?: string;
+  nonce?: number | string;
+  gasLimit?: number | string;
+}
+
 export interface Log {
   blockNumber: number;
   blockHash: string;
@@ -23,12 +31,34 @@ export interface Log {
   logIndex: number;
 }
 
+export type AccessList = Array<{ address: string; storageKeys: Array<string> }>;
 export interface Transaction {
-  to: string;
-  value?: string;
-  data?: string;
-  nonce?: number | string;
-  gasLimit?: number | string;
+  hash?: string;
+
+  to?: string;
+  from?: string;
+  nonce: number;
+
+  gasLimit: BigNumber;
+  gasPrice?: BigNumber;
+
+  data: string;
+  value: BigNumber;
+  chainId: number;
+
+  r?: string;
+  s?: string;
+  v?: number;
+
+  // Typed-Transaction features
+  type?: number | null;
+
+  // EIP-2930; Type 1 & EIP-1559; Type 2
+  accessList?: AccessList;
+
+  // EIP-1559; Type 2
+  maxPriorityFeePerGas?: BigNumber;
+  maxFeePerGas?: BigNumber;
 }
 
 export interface TransactionResponse extends Transaction {
