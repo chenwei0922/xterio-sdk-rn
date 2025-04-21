@@ -50,7 +50,14 @@ const WalletContext = createContext<IWalletContextState>(
 const WalletContextProvider: React.FC<
   PropsWithChildren<IXterioWalletContextProps>
 > = ({ children, ...rest }) => {
-  const { env, transactionMode } = rest;
+  const {
+    env,
+    transactionMode,
+    PN_APP_ID,
+    PN_CHAIN_ID,
+    PN_CLIENT_KEY,
+    PN_PROJECT_ID,
+  } = rest;
   const envConfig = useConfig(env, transactionMode);
 
   const [aaAddress, setAaAddress] = useState('');
@@ -70,7 +77,13 @@ const WalletContextProvider: React.FC<
     signMessage,
     // signTypedData,
     // pnAA,
-  } = usePnWallet();
+  } = usePnWallet({
+    PN_CHAIN_ID,
+    PN_PROJECT_ID,
+    PN_CLIENT_KEY,
+    PN_APP_ID,
+    env,
+  });
 
   const isPnLoginedRef = useRef(isPnLogin);
 

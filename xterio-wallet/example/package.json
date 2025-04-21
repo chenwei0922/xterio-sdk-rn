@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "pod-backup": "cp ../RnWallet.podspec ../RnWallet.podspec.bak",
+    "pod-restore": "mv ../RnWallet.podspec.bak ../RnWallet.podspec",
+    "pod-install": "yarn pod-backup && cd ios && bundle install && bundle exec pod install && cd .. && yarn pod-restore",
+    "gradlew": "cd android && ./gradlew generateCodegenArtifactsFromSchema && cd ..",
     "postinstall": "patch-package",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -14,7 +18,7 @@
     "@particle-network/rn-aa": "2.0.6",
     "@particle-network/rn-auth-core": "2.0.6",
     "@particle-network/rn-base": "2.0.6",
-    "@xterio-sdk/rn-auth": "0.1.4-p",
+    "@xterio-sdk/rn-auth": "0.1.5",
     "@xterio-sdk/rn-wallet": "workspace:*",
     "react": "18.3.1",
     "react-native": "0.76.5"

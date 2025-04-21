@@ -5,7 +5,7 @@ import * as particleAA from '@particle-network/rn-aa';
 
 import { Ethereum } from '@particle-network/chains';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { XLog } from '../common/utils';
+import { XLog, type EnvItemType } from '../common/utils';
 import aaOptions from '../common/config/erc4337';
 import {
   getEVMPublicAddress,
@@ -15,6 +15,7 @@ import {
   useEthereum,
   type Provider,
 } from './authkit';
+import type { IXterioWalletContextProps } from '../interfaces/types';
 
 type PnUserInfoType = particleAuthCore.UserInfo | undefined;
 export interface IPnWalletState {
@@ -22,7 +23,7 @@ export interface IPnWalletState {
   pnUserInfo: PnUserInfoType;
   pnEoaAddress: string;
   pnAAWalletAddress: string | undefined;
-  provider: Provider;
+  provider: Provider | undefined;
   connectPnEoA: (jwt?: string, _chainId?: number) => Promise<PnUserInfoType>;
   connectPnAA: (
     _chainId?: number,
@@ -40,7 +41,17 @@ export interface IPnWalletState {
   signMessage: (message: string, uniq?: boolean) => Promise<string>;
 }
 
-export const usePnWallet = (): IPnWalletState => {
+type IPnWalletProps = Pick<
+  IXterioWalletContextProps,
+  'PN_APP_ID' | 'PN_CLIENT_KEY' | 'PN_PROJECT_ID' | 'PN_CHAIN_ID' | 'env'
+>;
+
+export const usePnWallet = ({
+  PN_CHAIN_ID,
+  PN_CLIENT_KEY,
+  PN_PROJECT_ID,
+  env: _env,
+}: IPnWalletProps): IPnWalletState => {
   const { connected, connect, disconnect } = useConnect();
   const { chainInfo, address, chains, provider, switchChain, signMessage } =
     useEthereum();
@@ -149,8 +160,10 @@ export const usePnWallet = (): IPnWalletState => {
   );
 
   const initLogic = useCallback(() => {
-    ParticleInfo.projectId = '63afedf8-0ebc-4474-b911-45f22dd0f4d2';
-    ParticleInfo.clientKey = 'c9ZWwJOsJUTJjmMWajCL9hcMqczgS19U5RfEvwlD';
+    ParticleInfo.projectId =
+      PN_PROJECT_ID || '63afedf8-0ebc-4474-b911-45f22dd0f4d2';
+    ParticleInfo.clientKey =
+      PN_CLIENT_KEY || 'c9ZWwJOsJUTJjmMWajCL9hcMqczgS19U5RfEvwlD';
 
     if (ParticleInfo.projectId === '' || ParticleInfo.clientKey === '') {
       throw new Error(
@@ -158,8 +171,10 @@ export const usePnWallet = (): IPnWalletState => {
       );
     }
 
-    const chain = Ethereum;
-    const env = Env.Dev;
+    XLog.debug('init particle');
+
+    const chain = chains.find((i) => i.id === PN_CHAIN_ID) || Ethereum;
+    const env = _env || Env.Dev;
     particleBase.init(chain, env);
     particleAuthCore.init();
 

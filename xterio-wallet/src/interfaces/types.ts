@@ -9,4 +9,8 @@ export enum SendTransactionMode {
 export interface IXterioWalletContextProps extends Partial<ISSoTokensParams> {
   env?: Env;
   transactionMode?: SendTransactionMode;
+  PN_CHAIN_ID?: string | number;
+  PN_PROJECT_ID?: string;
+  PN_CLIENT_KEY?: string;
+  PN_APP_ID?: string;
 }

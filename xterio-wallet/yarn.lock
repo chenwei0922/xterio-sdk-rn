@@ -3880,22 +3880,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xterio-sdk/rn-auth@npm:0.1.4-p":
-  version: 0.1.4-p
-  resolution: "@xterio-sdk/rn-auth@npm:0.1.4-p"
-  dependencies:
-    js-base64: ^3.7.7
-    query-string: ^9.1.1
-    react-native-root-siblings: ^5.0.1
-    react-native-webview: ^13.13.1
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: a2f3b9fa3651d5693e8b52d1e58e449bb947193f73a3599bffdf9dcfed35afaf4f13c38ebe4bb14505f02a7fd20dd2298efbbdb3462593e1775ee6ee35c93c83
-  languageName: node
-  linkType: hard
-
-"@xterio-sdk/rn-auth@npm:^0.1.5":
+"@xterio-sdk/rn-auth@npm:0.1.5, @xterio-sdk/rn-auth@npm:^0.1.5":
   version: 0.1.5
   resolution: "@xterio-sdk/rn-auth@npm:0.1.5"
   dependencies:
@@ -3927,7 +3912,7 @@ __metadata:
     "@react-native/metro-config": 0.76.5
     "@react-native/typescript-config": 0.76.5
     "@types/react": ^18.2.6
-    "@xterio-sdk/rn-auth": 0.1.4-p
+    "@xterio-sdk/rn-auth": 0.1.5
     "@xterio-sdk/rn-wallet": "workspace:*"
     patch-package: ^8.0.0
     react: 18.3.1
