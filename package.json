@@ -1,0 +1,23 @@
+{
+  "name": "xterio-sdk-rn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish:auth": "tsx sh/publish.ts auth",
+    "publish:wallet": "tsx sh/publish.ts wallet"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "chalk": "^5.4.1",
+    "consola": "^3.4.2",
+    "fs-extra": "^11.3.0",
+    "tsx": "^4.19.3"
+  }
+}
