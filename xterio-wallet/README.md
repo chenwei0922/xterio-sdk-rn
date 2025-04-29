@@ -5,8 +5,7 @@ xterio wallet service in react native
 ## Installation
 
 ```sh
-npm install @xterio-sdk/rn-wallet 
-npm install @xterio-sdk/rn-auth
+npm install @xterio-sdk/rn-wallet @xterio-sdk/rn-auth
 
 # only ios
 npx pod-install
