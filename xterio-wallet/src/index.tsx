@@ -12,9 +12,3 @@ export {
   SendTransactionMode,
 };
 export type { IXterioWalletContextProps };
-
-import RnWallet from './NativeRnWallet';
-
-export function multiply(a: number, b: number): number {
-  return RnWallet.multiply(a, b);
-}

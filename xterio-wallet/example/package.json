@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "pod-backup": "cp ../RnWallet.podspec ../RnWallet.podspec.bak",
-    "pod-restore": "mv ../RnWallet.podspec.bak ../RnWallet.podspec",
-    "pod-install": "yarn pod-backup && cd ios && bundle install && bundle exec pod install && cd .. && yarn pod-restore",
+    "pods": "cd ios && bundle install && bundle exec pod install && cd ..",
     "gradlew": "cd android && ./gradlew generateCodegenArtifactsFromSchema && cd ..",
     "postinstall": "patch-package",
     "android": "react-native run-android",

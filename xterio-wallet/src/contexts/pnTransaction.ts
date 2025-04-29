@@ -235,7 +235,7 @@ export const useXterioTransaction = <
 
       const txHash = await evm.batchSendTransactions(transaction, feeMode);
       XLog.debug('pn AA sendTransaction txhash ====', txHash);
-      const txPromise = getTxPromise(provider, txHash);
+      const txPromise = getTxPromise(provider!, txHash);
       const receipt = await promiseTransaction(txPromise);
       return receipt;
     },

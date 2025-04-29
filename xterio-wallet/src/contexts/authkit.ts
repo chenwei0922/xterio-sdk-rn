@@ -50,9 +50,13 @@ export const useConnect = () => {
 const cacheProvider: Map<ChainId, Provider> = new Map();
 
 export const useEthereum = () => {
+  const defaultProvider = useMemo(
+    () => new ethers.providers.JsonRpcProvider(rpcs[1]),
+    []
+  );
   const [chainInfo, setChainInfo] = useState(Ethereum);
   const [address, setAddress] = useState<string | null>(null);
-  const [provider, setProvider] = useState<Provider>();
+  const [provider, setProvider] = useState<Provider>(defaultProvider);
   const [chainId, setChainId] = useState<number>();
 
   const allChains = useMemo(() => chains.getAllChainInfos(), []);
@@ -73,9 +77,7 @@ export const useEthereum = () => {
           new ethers.providers.JsonRpcProvider(rpcs[_chain_id])
         );
       }
-      setProvider(cacheProvider.get(_chain_id));
-    } else {
-      setProvider(undefined);
+      setProvider(cacheProvider.get(_chain_id) || defaultProvider);
     }
     XLog.debug(
       '[useEthereum] chain=',
@@ -84,7 +86,7 @@ export const useEthereum = () => {
       'eoa_address=',
       _addr
     );
-  }, []);
+  }, [defaultProvider]);
 
   const switchChain = useCallback(
     async (id: number) => {
@@ -103,9 +105,9 @@ export const useEthereum = () => {
       return new Promise((resolve, reject) => {
         (uniq ? evm.personalSignUnique(message) : evm.personalSign(message))
           .then((res) => {
-            const result = (res as any)?.signature || '';
-            XLog.debug('[useEthereum] sign message success:', result);
-            resolve(result as string);
+            const result = (res as any)?.signature || res;
+            XLog.debug('[useEthereum] sign message success:', res);
+            resolve(result);
           })
           .catch((err: CommonError) => {
             XLog.debug('[useEthereum] sign message error:', err);

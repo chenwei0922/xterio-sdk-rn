@@ -1,6 +1,5 @@
 import { Text, View, StyleSheet, Button, ScrollView } from 'react-native';
 import {
-  multiply,
   SendTransactionMode,
   useXterioTransaction,
   useXterioWalletContext,
@@ -16,8 +15,6 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { ERC20_ABI } from './common/abi';
 import { getContract, NETWORK_NAME } from './utils';
-
-const result = multiply(3, 7);
 
 const WalletView = () => {
   const { isLogin, userinfo, login, logout } = useXterioAuthContext();
@@ -113,7 +110,6 @@ const WalletView = () => {
       </View>
       <Text>xterio wallet transaction</Text>
       <View>
-        <Text>pn aa wallet address: {aaAddress}</Text>
         <Text>sign message result: {signedMsg}</Text>
         <Button
           title="SignMessage"
@@ -146,7 +142,7 @@ export default function App() {
   };
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>Xterio Wallet SDK Test Demo</Text>
       <XterioAuthProvider {...config}>
         <XterioWalletProvider
           {...config}
@@ -162,6 +158,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 100,
     alignItems: 'center',
     // justifyContent: 'center',
   },

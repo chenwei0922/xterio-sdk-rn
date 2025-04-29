@@ -5,7 +5,7 @@ import * as particleAA from '@particle-network/rn-aa';
 
 import { Ethereum } from '@particle-network/chains';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { XLog, type EnvItemType } from '../common/utils';
+import { XLog } from '../common/utils';
 import aaOptions from '../common/config/erc4337';
 import {
   getEVMPublicAddress,
@@ -23,7 +23,7 @@ export interface IPnWalletState {
   pnUserInfo: PnUserInfoType;
   pnEoaAddress: string;
   pnAAWalletAddress: string | undefined;
-  provider: Provider | undefined;
+  provider: Provider;
   connectPnEoA: (jwt?: string, _chainId?: number) => Promise<PnUserInfoType>;
   connectPnAA: (
     _chainId?: number,
@@ -183,7 +183,7 @@ export const usePnWallet = ({
       version: '1.0.0',
     });
     particleAA.enableAAMode();
-  }, []);
+  }, [PN_CHAIN_ID, PN_CLIENT_KEY, PN_PROJECT_ID, _env, chains]);
 
   useEffect(() => {
     //init
