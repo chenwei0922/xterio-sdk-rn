@@ -53,12 +53,30 @@ const { sendTransaction, sendUserOperation, state } = useXterioTransaction(erc20
 
 ## Configuration
 
+> There are two methods for automatic linking of the `ParticlenNetwork` series modules. 
+> 
+> One is to find the project `react-native.config.js` file and add the `dependencies` configuration item as follows; 
+> 
+> the other is to directly install the corresponding module. `npm install @particle-network/rn-base@2.0.6 @particle-network/rn-auth-core@2.0.6 @particle-network/rn-aa@2.0.6`.
+>
+
+```js
+//...
+dependencies: {
+  //...
+  '@particle-network/rn-base': {},
+  '@particle-network/rn-auth-core': {},
+  '@particle-network/rn-aa': {},
+  //...
+},
+```
+
 ### iOS
-![iOS配置图](./docs/images/ios.png)
+![iOS配置图](docs/images/ios.png)
 
 ### Android
 
-![Android配置图](./docs/images/android.png)
+![Android配置图](docs/images/android.png)
 
 ## API Reference
 

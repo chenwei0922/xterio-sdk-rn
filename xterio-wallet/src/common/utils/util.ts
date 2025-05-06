@@ -4,6 +4,6 @@ function sleep(time: number): Promise<number> {
   });
 }
 export const Utils = {
-  pkgVersion: '0.1.0',
+  pkgVersion: '0.1.1',
   sleep,
 };
