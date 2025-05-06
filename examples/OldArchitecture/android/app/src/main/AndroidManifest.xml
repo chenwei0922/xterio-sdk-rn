@@ -20,6 +20,13 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        <intent-filter>
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <!-- 配置scheme-->
+          <data android:scheme="xterio-sdk-rn" />
+        </intent-filter>
       </activity>
     </application>
 </manifest>

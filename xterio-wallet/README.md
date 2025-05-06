@@ -72,9 +72,33 @@ dependencies: {
 ```
 
 ### iOS
+At the root of your Xcode project, create a new file, `ParticleNetwork-Info.plist`. Ensure this is marked under “Target Membership.”
+
+From here, with a fresh `ParticleNetwork-Info.plist` file, go ahead and fill it in with the following:
+
+```js
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PROJECT_UUID</key>
+	<string>YOUR_PROJECT_UUID</string>
+	<key>PROJECT_CLIENT_KEY</key>
+	<string>YOUR_PROJECT_CLIENT_KEY</string>
+	<key>PROJECT_APP_UUID</key>
+	<string>YOUR_PROJECT_APP_UUID</string>
+</dict>
+</plist>
+
+```
+
+Finally, you’ll need to edit your Podfile to align with the snippet below; this is required for all iOS projects that leverage Particle Auth Core.
+
 ![iOS配置图](docs/images/ios.png)
 
 ### Android
+
+If you’re planning on using Android for your React Native application, ensure you meet the following prerequisites (otherwise, expect issues or non-functionality):
 
 ![Android配置图](docs/images/android.png)
 

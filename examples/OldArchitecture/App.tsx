@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   Button,
@@ -34,6 +34,14 @@ import {
   useXterioAuthContext,
   XterioAuthProvider,
 } from '@xterio-sdk/rn-auth';
+import {
+  SendTransactionMode,
+  useXterioTransaction,
+  useXterioWalletContext,
+  XterioWalletProvider,
+} from '@xterio-sdk/rn-wallet';
+import {ERC20_ABI} from './src/common/abi';
+import {getContract, NETWORK_NAME} from './src/utils';
 
 const XterioAuthTestDemo = () => {
   const {
@@ -58,6 +66,71 @@ const XterioAuthTestDemo = () => {
   const _getPageUrl = useCallback(() => {
     console.log('the page uri=', getPageUrl(PageType.nft_market));
   }, [getPageUrl]);
+
+  const {
+    connectWallet,
+    disconnectWallet,
+    obtainWallet,
+    switchChain,
+    openWallet,
+    signMessage,
+    isConnect,
+    aaAddress,
+  } = useXterioWalletContext();
+
+  const [signedMsg, setSignedMsg] = useState('');
+
+  const contractAddress = '0x12065F0d03cd1Bd280565069164F9E803c2DA988';
+  const abi = ERC20_ABI;
+  const erc20 = getContract(NETWORK_NAME.SEPOLIA, contractAddress, abi);
+
+  const {sendTransaction, sendUserOperation, state} = useXterioTransaction(
+    erc20,
+    'transfer',
+  );
+
+  const test1 = async () => {
+    //方式1: sendTransaction，useXterioTransaction 必须传contract跟functionName
+    const toAddr = '0xF4Ae736B14a7B5FDb803172B242074D6DFe655bb';
+    const amount = '0x0de0b6b3a7640000';
+    try {
+      await sendTransaction?.(toAddr, amount);
+    } catch (err: any) {
+      console.log('ddd', err, err?.message);
+    }
+  };
+
+  const test2 = async () => {
+    //方式2: sendUserOperation
+    const contractAddress = '0x12065F0d03cd1Bd280565069164F9E803c2DA988';
+    const abi = ERC20_ABI;
+    const erc20 = getContract(NETWORK_NAME.SEPOLIA, contractAddress, abi);
+    const toAddr = '0xF4Ae736B14a7B5FDb803172B242074D6DFe655bb';
+    const amount = '0x0de0b6b3a7640000';
+
+    const tx = {
+      to: contractAddress,
+      data: erc20.interface.encodeFunctionData('transfer', [toAddr, amount]),
+    };
+    try {
+      await sendUserOperation?.(tx);
+    } catch (err) {
+      console.log('ddd', err);
+    }
+  };
+
+  useEffect(() => {
+    const status = state.status;
+    console.log('status=', status);
+    if (status === 'Mining' || status === 'PendingSignature') {
+      console.log('trade ing');
+    } else if (status === 'Success') {
+      console.log('trade success');
+    } else if (status === 'Exception' || status === 'Fail') {
+      console.log('trade failed');
+    }
+  }, [state.status]);
+
   return (
     <View style={{flex: 1, backgroundColor: 'yellow'}}>
       <StatusBar />
@@ -69,6 +142,39 @@ const XterioAuthTestDemo = () => {
       <Button title="Logout" onPress={logout} />
       <Button title="OpenPage" onPress={_openPage} />
       <Button title="GetPageUrl" onPress={_getPageUrl} />
+
+      <Text>xterio wallet sdk</Text>
+      <View>
+        <Text>pn aa wallet address: {aaAddress}</Text>
+        <Text>
+          pn aa wallet connected status:{isConnect ? 'true' : 'false'}
+        </Text>
+        <Button title="ConnectWallet" onPress={() => connectWallet()} />
+        <Button title="DisConnectWallet" onPress={() => disconnectWallet()} />
+        <Button title="ObtainWallet" onPress={() => obtainWallet()} />
+        <Button title="SwitchChain" onPress={() => switchChain(11155111)} />
+        <Button title="OpenWallet" onPress={() => openWallet()} />
+      </View>
+      <Text>xterio wallet transaction</Text>
+      <View>
+        <Text>sign message result: {signedMsg}</Text>
+        <Button
+          title="SignMessage"
+          onPress={() => {
+            signMessage?.('hello world')
+              .then(res => {
+                setSignedMsg(res);
+              })
+              .catch(err => {
+                console.log('sign message error', err);
+              });
+          }}
+        />
+        <Text>the transaction progress: {state.status}</Text>
+
+        <Button title="Transfer Transaction" onPress={() => test1()} />
+        <Button title="Transfer2 Transaction" onPress={() => test2()} />
+      </View>
     </View>
   );
 };
@@ -129,7 +235,11 @@ function App(): React.JSX.Element {
         style={backgroundStyle}>
         <Header />
         <XterioAuthProvider {...config}>
-          <XterioAuthTestDemo />
+          <XterioWalletProvider
+            {...config}
+            transactionMode={SendTransactionMode.Gasless}>
+            <XterioAuthTestDemo />
+          </XterioWalletProvider>
         </XterioAuthProvider>
         <View
           style={{

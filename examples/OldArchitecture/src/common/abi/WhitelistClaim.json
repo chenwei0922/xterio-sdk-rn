@@ -1,0 +1,19 @@
+[
+  "event OwnershipTransferred(address indexed,address indexed)",
+  "event UpdateMerkleRoot(bytes32)",
+  "event XClaim(address indexed,uint256)",
+  "function claim(uint256,bytes32[])",
+  "function claimed(address) view returns (bool)",
+  "function deadline() view returns (uint256)",
+  "function isTimeValid() view returns (bool)",
+  "function isWhitelisted(address,uint256,bytes32[]) view returns (bool)",
+  "function merkleRoot() view returns (bytes32)",
+  "function owner() view returns (address)",
+  "function renounceOwnership()",
+  "function startTime() view returns (uint256)",
+  "function transferOwnership(address)",
+  "function updateDeadline(uint256)",
+  "function updateMerkleRoot(bytes32)",
+  "function updateStartTime(uint256)",
+  "function withdraw(address)"
+]

@@ -11,10 +11,11 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		6B5C27A75C292B89C53E3BD3 /* libPods-OldArchitecture-OldArchitectureTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BABF7711662610A04BD858EF /* libPods-OldArchitecture-OldArchitectureTests.a */; };
+		5403CF5AA24930F899B55CFC /* Pods_OldArchitecture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8254D3C5092F7D7D7DCB8B0A /* Pods_OldArchitecture.framework */; };
+		744F7CA92DCA2846002FF624 /* ParticleNetwork-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 744F7CA82DCA2846002FF624 /* ParticleNetwork-Info.plist */; };
 		79A4F78B2796AE703C8D63CE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AA01E4DF303C1E5022D0388F /* PrivacyInfo.xcprivacy */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		EC9B8292B7294E633AE84418 /* libPods-OldArchitecture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FAB3AD52C98BF3C84F49C59 /* libPods-OldArchitecture.a */; };
+		CFE8C3AB113BCC51B5CFB6DD /* Pods_OldArchitecture_OldArchitectureTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 985DD60844CCED55D26A5557 /* Pods_OldArchitecture_OldArchitectureTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,10 +40,11 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = OldArchitecture/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = OldArchitecture/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		30BA9D59565AF6C45C10521D /* Pods-OldArchitecture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OldArchitecture.debug.xcconfig"; path = "Target Support Files/Pods-OldArchitecture/Pods-OldArchitecture.debug.xcconfig"; sourceTree = "<group>"; };
-		7FAB3AD52C98BF3C84F49C59 /* libPods-OldArchitecture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OldArchitecture.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		744F7CA82DCA2846002FF624 /* ParticleNetwork-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ParticleNetwork-Info.plist"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = OldArchitecture/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		AA01E4DF303C1E5022D0388F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = OldArchitecture/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		BABF7711662610A04BD858EF /* libPods-OldArchitecture-OldArchitectureTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OldArchitecture-OldArchitectureTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8254D3C5092F7D7D7DCB8B0A /* Pods_OldArchitecture.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OldArchitecture.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		985DD60844CCED55D26A5557 /* Pods_OldArchitecture_OldArchitectureTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OldArchitecture_OldArchitectureTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA01E4DF303C1E5022D0388F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = OldArchitecture/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C8D432262A4C03D98BD3CA58 /* Pods-OldArchitecture-OldArchitectureTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OldArchitecture-OldArchitectureTests.debug.xcconfig"; path = "Target Support Files/Pods-OldArchitecture-OldArchitectureTests/Pods-OldArchitecture-OldArchitectureTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CC1B611C39C753D8D3F7EB95 /* Pods-OldArchitecture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OldArchitecture.release.xcconfig"; path = "Target Support Files/Pods-OldArchitecture/Pods-OldArchitecture.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -54,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B5C27A75C292B89C53E3BD3 /* libPods-OldArchitecture-OldArchitectureTests.a in Frameworks */,
+				CFE8C3AB113BCC51B5CFB6DD /* Pods_OldArchitecture_OldArchitectureTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC9B8292B7294E633AE84418 /* libPods-OldArchitecture.a in Frameworks */,
+				5403CF5AA24930F899B55CFC /* Pods_OldArchitecture.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +91,7 @@
 		13B07FAE1A68108700A75B9A /* OldArchitecture */ = {
 			isa = PBXGroup;
 			children = (
+				744F7CA82DCA2846002FF624 /* ParticleNetwork-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -105,8 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				7FAB3AD52C98BF3C84F49C59 /* libPods-OldArchitecture.a */,
-				BABF7711662610A04BD858EF /* libPods-OldArchitecture-OldArchitectureTests.a */,
+				8254D3C5092F7D7D7DCB8B0A /* Pods_OldArchitecture.framework */,
+				985DD60844CCED55D26A5557 /* Pods_OldArchitecture_OldArchitectureTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				79A4F78B2796AE703C8D63CE /* PrivacyInfo.xcprivacy in Resources */,
+				744F7CA92DCA2846002FF624 /* ParticleNetwork-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +476,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 874653P7LE;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = OldArchitecture/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -485,6 +490,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.example.OldArchitecture1;
 				PRODUCT_NAME = OldArchitecture;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -499,6 +505,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 874653P7LE;
 				INFOPLIST_FILE = OldArchitecture/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -511,6 +518,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.reactjs.native.example.OldArchitecture1;
 				PRODUCT_NAME = OldArchitecture;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -568,6 +576,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers/react/nativemodule/core",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers/platform/ios",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-Fabric/React_Fabric.framework/Headers/react/renderer/components/view/platform/cxx",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD = "";
 				LDPLUSPLUS = "";
@@ -590,10 +609,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -644,6 +660,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers/react/nativemodule/core",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers/platform/ios",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-Fabric/React_Fabric.framework/Headers/react/renderer/components/view/platform/cxx",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD = "";
 				LDPLUSPLUS = "";
@@ -665,10 +692,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
