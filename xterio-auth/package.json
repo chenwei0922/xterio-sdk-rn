@@ -54,14 +54,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chenweigh/xterio-sdk-rn-auth.git"
+    "url": "https://github.com/XterioTech/XterioSDK-RN.git",
+    "directory": "xterio-auth"
   },
-  "author": "ChenWei <chen158_7@126.com> (https://github.com/chenweigh)",
+  "author": "XterioTech",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chenweigh/xterio-sdk-rn-auth/issues"
+    "url": "https://github.com/XterioTech/XterioSDK-RN/issues"
   },
-  "homepage": "https://github.com/chenweigh/xterio-sdk-rn-auth#readme",
+  "homepage": "https://github.com/XterioTech/XterioSDK-RN#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"

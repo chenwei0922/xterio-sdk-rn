@@ -69,9 +69,9 @@ const publishWallet = async () => {
   await commitVersionFile('wallet', walletVersion)
 }
 
-const commitVersionFile = async (_f: string, _v: string, _reset?: boolean) => {
+const commitVersionFile = async (_f: string, _v: string) => {
   const path = _f === 'auth' ? pathAuth : pathWallet
-  const msg = _reset ? `feat: recover files after publish ${_f}(${_v})` : `chore: npm pkg(${_f}) publish(${_v})`
+  const msg = `chore: npm pkg(${_f}) publish(${_v})`
   await run(`git add . && git commit -m "${msg}"`, path)
   await run(`git push origin main`)
 }

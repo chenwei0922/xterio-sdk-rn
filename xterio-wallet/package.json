@@ -50,14 +50,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chenweigh/xterio-sdk-rn-wallet.git"
+    "url": "https://github.com/XterioTech/XterioSDK-RN.git",
+    "directory": "xterio-wallet"
   },
-  "author": "ChenWei <chen158_7@126.com> (https://github.com/chenweigh)",
+  "author": "XterioTech",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chenweigh/xterio-sdk-rn-wallet/issues"
+    "url": "https://github.com/XterioTech/XterioSDK-RN/issues"
   },
-  "homepage": "https://github.com/chenweigh/xterio-sdk-rn-wallet#readme",
+  "homepage": "https://github.com/XterioTech/XterioSDK-RN#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
