@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "postinstall": "patch-package",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
@@ -10,12 +11,15 @@
     "test": "jest"
   },
   "dependencies": {
-    "@xterio-sdk/rn-auth": "^0.1.2",
+    "@xterio-sdk/rn-auth": "^0.1.5",
+    "@xterio-sdk/rn-wallet": "^0.1.2",
+    "@particle-network/rn-auth-core": "2.0.6",
     "react": "19.0.0",
     "react-native": "0.78.1",
     "react-native-webview": "^13.13.5"
   },
   "devDependencies": {
+    "patch-package": "^8.0.0",
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",

@@ -1,0 +1,11 @@
+[
+  "constructor(address)",
+  "event ConfigLootBox(address indexed,uint256 indexed,address indexed,uint256,uint256)",
+  "event OwnershipTransferred(address indexed,address indexed)",
+  "event UnwrapLootBox(address,uint256,address indexed,uint256 indexed)",
+  "function configLootBox(address,uint256,uint256,address,uint256)",
+  "function owner() view returns (address)",
+  "function renounceOwnership()",
+  "function transferOwnership(address)",
+  "function unwrapLootBox(address,uint256) returns (uint256)"
+]

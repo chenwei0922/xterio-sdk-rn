@@ -1,0 +1,15 @@
+diff --git a/node_modules/@particle-network/rn-auth-core/android/src/main/java/com/particleauthcore/ParticleAuthCoreModule.kt b/node_modules/@particle-network/rn-auth-core/android/src/main/java/com/particleauthcore/ParticleAuthCoreModule.kt
+index 5aa2bcf..8b2e9e0 100644
+--- a/node_modules/@particle-network/rn-auth-core/android/src/main/java/com/particleauthcore/ParticleAuthCoreModule.kt
++++ b/node_modules/@particle-network/rn-auth-core/android/src/main/java/com/particleauthcore/ParticleAuthCoreModule.kt
+@@ -246,10 +246,6 @@ class ParticleAuthCoreModule(reactContext: ReactApplicationContext) :
+         callback.invoke(ReactCallBack.success("success").toGson())
+     }
+ 
+-    @ReactMethod
+-    fun openAccountAndSecurity() {
+-
+-    }
+ 
+ 
+     //evm

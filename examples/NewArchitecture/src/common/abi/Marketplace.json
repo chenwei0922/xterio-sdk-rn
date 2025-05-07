@@ -1,0 +1,23 @@
+[
+  "event AddPaymentToken(address indexed)",
+  "event IgnoreMessageHash(address indexed,bytes32 indexed)",
+  "event MatchOrder(address indexed,uint256 indexed,address indexed,uint256,uint256,address,address,bytes32,bytes32)",
+  "event OwnershipTransferred(address indexed,address indexed)",
+  "event RemovePaymentToken(address indexed)",
+  "event SetServiceFeeRecipient(address indexed)",
+  "function BASE() view returns (uint256)",
+  "function ERC1155_FOR_ERC20() view returns (bytes32)",
+  "function ERC721_FOR_ERC20() view returns (bytes32)",
+  "function addPaymentTokens(address[])",
+  "function atomicMatch(bytes32,bytes,address,bytes,bytes,address,bytes,bytes)",
+  "function ignoreMessageHash(bytes32)",
+  "function ignoreMessageHashs(bytes32[])",
+  "function initialize()",
+  "function owner() view returns (address)",
+  "function paymentTokens(address) view returns (bool)",
+  "function removePaymentTokens(address[])",
+  "function renounceOwnership()",
+  "function serviceFeeRecipient() view returns (address)",
+  "function setServiceFeeRecipient(address)",
+  "function transferOwnership(address)"
+]

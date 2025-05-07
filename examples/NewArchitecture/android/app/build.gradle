@@ -84,6 +84,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders["PN_PROJECT_ID"] = "63afedf8-0ebc-4474-b911-45f22dd0f4d2"
+        manifestPlaceholders["PN_PROJECT_CLIENT_KEY"] = "c9ZWwJOsJUTJjmMWajCL9hcMqczgS19U5RfEvwlD"
+        manifestPlaceholders["PN_APP_ID"] = "999c651d-ea3d-4660-8c01-5b4df368135f"
     }
     signingConfigs {
         debug {
@@ -105,9 +108,20 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
+    modules {
+        module("org.bouncycastle:bcprov-jdk15to18") {
+            replacedBy("org.bouncycastle:bcprov-jdk15on")
+        }
+        module("org.bouncycastle:bcprov-jdk18on") {
+            replacedBy("org.bouncycastle:bcprov-jdk15on")
+        }
+    }
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 

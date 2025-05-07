@@ -5,7 +5,7 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-platform :ios, min_ios_version_supported
+platform :ios, '15.6'
 prepare_react_native_project!
 
 linkage = ENV['USE_FRAMEWORKS']
@@ -15,6 +15,7 @@ if linkage != nil
 end
 
 target 'NewArchitecture' do
+  use_frameworks! :linkage => :static
   config = use_native_modules!
 
   use_react_native!(
@@ -31,5 +32,19 @@ target 'NewArchitecture' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+      
+        # 临时解决方案：创建 unistd.h 文件
+        unistd_file = File.join(__dir__, 'Pods/AWSCore/AWSCore/FMDB/unistd.h')
+        unless File.exist?(unistd_file)
+          File.open(unistd_file, 'w') do |f|
+            f.write("#import <unistd.h>\n")
+          end
+        end
+      end
+    end
   end
 end

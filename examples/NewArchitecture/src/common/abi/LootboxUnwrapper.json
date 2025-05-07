@@ -1,0 +1,5 @@
+[
+  "constructor(address)",
+  "event UnwrapLootbox(address indexed,address,uint256,address indexed,uint256 indexed)",
+  "function unwrapLootbox(address,uint256,address,uint256,uint256,bytes)"
+]
