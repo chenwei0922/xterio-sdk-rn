@@ -13,18 +13,18 @@ tag_commit:
   script:
     - echo "Checking commit message for tagging..."
     - COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-    - echo "Latest commit message: $COMMIT_MESSAGE"
-    - if [[ "$COMMIT_MESSAGE" =~ ^chore:\ npm\ pkg\(([^)]+)\)\ publish\(([0-9]+\.[0-9]+\.[0-9]+)\) ]]; then
-        NAME="${BASH_REMATCH[1]}";
-        VERSION="${BASH_REMATCH[2]}";
-        TAG_NAME="xterio-$NAME@$VERSION";
-        echo "Creating tag: $TAG_NAME";
-        git tag "$TAG_NAME";
-        git push origin "$TAG_NAME";
-        sleep 3;
-      else
-        echo "No valid tag found in commit message.";
-      fi
+    - echo "Latest commit message:\ $COMMIT_MESSAGE"
+    # - if [[ "$COMMIT_MESSAGE" =~ ^chore:\ npm\ pkg\(([^)]+)\)\ publish\(([0-9]+\.[0-9]+\.[0-9]+)\) ]]; then
+    #     NAME="${BASH_REMATCH[1]}";
+    #     VERSION="${BASH_REMATCH[2]}";
+    #     TAG_NAME="xterio-$NAME@$VERSION";
+    #     echo "Creating tag: $TAG_NAME";
+    #     git tag "$TAG_NAME";
+    #     git push origin "$TAG_NAME";
+    #     sleep 3;
+    #   else
+    #     echo "No valid tag found in commit message.";
+    #   fi
   only:
     - main
   variables:
