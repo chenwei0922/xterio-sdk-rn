@@ -1,0 +1,59 @@
+name: Release
+on:
+  push:
+    tags:
+      - "xterio-auth@*" #监听tag标签
+      - "xterio-wallet@*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23.4.0
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Extract Tag Information
+        id: extract_tag
+        run: |
+          TAG="${GITHUB_REF##refs/tags/}"
+          VERSION="${GITHUB_REF##*@}"
+          BASE_NAME="${GITHUB_REF%%@*}"
+          echo "TAG: $TAG"
+          echo "Base Name: $BASE_NAME"
+          echo "Version: $VERSION"
+          echo "::set-output name=base_name::$BASE_NAME"  # 设置输出变量
+          echo "::set-output name=version::$VERSION"
+
+      - name: Create ZIP Archive
+        run: |
+          prd="${{ steps.extract_tag.outputs.base_name }}"
+          version="${{ steps.extract_tag.outputs.version }}"
+          zip -r "${prd}-${version}.zip" "$prd"
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref }} #使用推送的标签
+          release_name: Release ${{ github.ref }} # 生成的 release 名称
+          draft: false
+          prerelease: false # 设置为 false 以标记为正式 release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref }}
+          files: "${{ github.workspace }}/${{ steps.extract_tag.outputs.base_name }}-${{ steps.extract_tag.outputs.version }}.zip" # 确保路径正确
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 使用 GitHub 提供的 token
