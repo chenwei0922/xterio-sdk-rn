@@ -1,12 +1,5 @@
 stages:
-  - setup
   - tag
-
-setup-job:
-  stage: setup
-  script:
-    - echo "Install dependencies"
-    - yarn install
 
 tag_commit:
   stage: tag
