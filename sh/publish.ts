@@ -74,6 +74,15 @@ const commitVersionFile = async (_f: string, _v: string) => {
   const msg = `chore: npm pkg(${_f}) publish(${_v})`
   await run(`git add . && git commit -m "${msg}"`, path)
   await run(`git push origin main`)
+  await sleep(3)
+  await run(`git tag xterio-${_f}@${_v}`)
+  await run(`git push origin --tags`)
+}
+
+const sleep = (time: number) => {
+  return new Promise((res) => {
+    setTimeout(res, time)
+  })
 }
 
 init()
