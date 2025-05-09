@@ -30,13 +30,17 @@ jobs:
           echo "TAG: $TAG"
           echo "Base Name: $BASE_NAME"
           echo "Version: $VERSION"
-          echo "::set-output name=base_name::$BASE_NAME"  # 设置输出变量
-          echo "::set-output name=version::$VERSION"
+          echo "base_name=$BASE_NAME" >> $GITHUB_ENV    # 设置输出变量
+          echo "version=$VERSION" >> $GITHUB_ENV
+          # echo "::set-output name=base_name::$BASE_NAME"  # 设置输出变量
+          # echo "::set-output name=version::$VERSION"
 
       - name: Create ZIP Archive
         run: |
-          prd="${{ steps.extract_tag.outputs.base_name }}"
-          version="${{ steps.extract_tag.outputs.version }}"
+          # prd="${{ steps.extract_tag.outputs.base_name }}"
+          # version="${{ steps.extract_tag.outputs.version }}"
+          prd="${{ env.base_name }}"
+          version="${{ env.version }}"
           zip -r "${prd}-${version}.zip" "$prd"
 
       - name: Create Release
@@ -54,6 +58,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref }}
-          files: "${{ github.workspace }}/${{ steps.extract_tag.outputs.base_name }}-${{ steps.extract_tag.outputs.version }}.zip" # 确保路径正确
+          files: "${{ github.workspace }}/${{ env.base_name }}-${{ env.version }}.zip" # 确保路径正确
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 使用 GitHub 提供的 token
