@@ -32,6 +32,7 @@ jobs:
           echo "Version: $VERSION"
           echo "base_name=$BASE_NAME" >> $GITHUB_ENV    # 设置输出变量
           echo "version=$VERSION" >> $GITHUB_ENV
+          echo "tag=$TAG" >> $GITHUB_ENV
 
       - name: Create ZIP Archive
         run: |
@@ -45,8 +46,8 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref }} #使用推送的标签
-          release_name: Release Demo  # 生成的 release 名称
+          tag_name: ${{ env.tag }} #使用推送的标签
+          release_name: "test"  # 生成的 release 名称
           draft: false
           prerelease: false # 设置为 false 以标记为正式 release
           files: "${{ github.workspace }}/${{ env.base_name }}-${{ env.version }}.zip" # 确保路径正确
