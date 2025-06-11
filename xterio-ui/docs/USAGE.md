@@ -11,9 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://reactnativeelements.com/">
-    <img alt="react-native-elements" src="./images/example.gif" width="200">
-  </a>
+  <img alt="xterio-ui-rn" src="./images/example.gif" width="200">
 </p>
 
 <br />
