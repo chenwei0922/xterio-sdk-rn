@@ -1,0 +1,14 @@
+export { default as XLoadingDemo } from './XLoading';
+export { default as XCutCornerTipDemo } from './XCutCornerTip';
+export { default as XImageDemo } from './XImage';
+export { default as XInputDemo } from './XInput';
+export { default as XGradientDemo } from './XGradient';
+export { default as XMultiTextDemo } from './XMultiText';
+export { default as XButtonDemo } from './XButton';
+export { default as XPopOverDemo } from './XPopOver';
+export { default as XPagerDemo } from './XPager';
+export { default as XStepProgressDemo } from './XStepProgress';
+export { default as XSwitchDemo } from './XSwitch';
+export { default as XTabDemo } from './XTab';
+export { default as XCheckboxDemo } from './XCheckbox';
+export { default as XCollapsibleDemo } from './XCollapsible';

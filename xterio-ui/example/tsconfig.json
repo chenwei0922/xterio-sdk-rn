@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    // Avoid expo-cli auto-generating a tsconfig
+    "baseUrl": ".",
+    "paths": {
+      "xterio-icons": [
+        "node_modules/xterio-icons/dist/xterio-icons-rn.d.ts"
+      ],
+      "@xterio-sdk/rn-ui": [
+        "../src/index"
+      ],
+    }
+  }
+}
