@@ -103,6 +103,9 @@ const main = async () => {
   if (!_name || _name === PackageEnum.wallet) {
     await new PkgPublish(PackageEnum.wallet, _version).publish()
   }
+  if (!_name || _name === PackageEnum.ui) {
+    await new PkgPublish(PackageEnum.ui, _version).publish()
+  }
 }
 
 main()
