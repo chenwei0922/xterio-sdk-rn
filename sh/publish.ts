@@ -80,7 +80,8 @@ class PkgPublish {
     await run(`git push origin main`)
     await sleep(3)
     await run(`git tag xterio-${name}@${_v}`)
-    await run(`git push origin --tags`)
+    await run(`git push origin xterio-${name}@${_v}`)
+    // await run(`git push origin --tags`)
   }
 }
 
