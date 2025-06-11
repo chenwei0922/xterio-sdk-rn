@@ -9,6 +9,13 @@
     <img src="https://img.shields.io/npm/v/@xterio-sdk/rn-ui?color=orange&label=" alt="version" />
   </a>
 </p>
+
+<p align="center">
+  <a href="https://reactnativeelements.com/">
+    <img alt="react-native-elements" src="./images/example.gif" width="200">
+  </a>
+</p>
+
 <br />
 
 ## Install
