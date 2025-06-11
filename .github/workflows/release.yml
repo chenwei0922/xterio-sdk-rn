@@ -4,6 +4,7 @@ on:
     tags:
       - "xterio-auth@*" #监听tag标签
       - "xterio-wallet@*"
+      - "xterio-ui@*"
 
 jobs:
   release:

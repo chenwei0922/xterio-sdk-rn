@@ -2,81 +2,86 @@ import chalk from 'chalk'
 import consola from 'consola'
 import { readFileSync, readJSONSync, writeFileSync, writeJSONSync } from 'fs-extra'
 
-import { pathAuth, pathWallet, pathAuthJson, pathWalletJson, pathSh, pathAuthVersion, pathWalletVersion } from './paths'
+import { pathAuth, pathWallet, pathAuthJson, pathWalletJson, pathSh, pathAuthVersion, pathWalletVersion, pathUi, pathUiJson } from './paths'
 import { run } from './run'
 
-const AuthJsonData = readJSONSync(pathAuthJson, { encoding: 'utf-8' })
-const WalletJsonData = readJSONSync(pathWalletJson, { encoding: 'utf-8' })
+enum PackageEnum {
+  auth = 'auth',
+  wallet = 'wallet',
+  ui = 'ui'
+}
 
-const _flag = process.argv[2]
-const _version = process.argv[3]
-consola.info('_flag=', chalk.blue(_flag), _version)
-
-
-const init = async () => {
-  const isExecuteAuth = !_flag || _flag === 'auth'
-  const isExecuteWallet = !_flag || _flag === 'wallet'
-  if (isExecuteAuth) {
-    await publishAuth()
-  }
-  if (isExecuteWallet) {
-    await publishWallet()
+const DataConfig: Record<PackageEnum, { pkgPath: string; pkgJsonPath: string; pkgVersionPath: string }> = {
+  [PackageEnum.auth]: {
+    pkgPath: pathAuth,
+    pkgJsonPath: pathAuthJson,
+    pkgVersionPath: pathAuthVersion
+  },
+  [PackageEnum.wallet]: {
+    pkgPath: pathWallet,
+    pkgJsonPath: pathWalletJson,
+    pkgVersionPath: pathWalletVersion
+  },
+  [PackageEnum.ui]: {
+    pkgPath: pathUi,
+    pkgJsonPath: pathUiJson,
+    pkgVersionPath: ''
   }
 }
 
-const publishAuth = async () => {
-  let authVersion = AuthJsonData.version
-  if (_version) {
-    authVersion = _version
-    AuthJsonData.version = _version
-    writeJSONSync(pathAuthJson, AuthJsonData, { encoding: 'utf-8', spaces: 2 })
+class PkgPublish {
+  private name: PackageEnum
+  private version: string
+  private pkgPath: string
+  private pkgJsonPath: string
+  private pkgVersionPath: string
+  private jsonData: any
+
+  constructor(tag: PackageEnum, version: string) {
+    this.name = tag
+    this.version = version
+    this.pkgPath = DataConfig[tag].pkgPath
+    this.pkgJsonPath = DataConfig[tag].pkgJsonPath
+    this.pkgVersionPath = DataConfig[tag].pkgVersionPath
+    this.jsonData = readJSONSync(this.pkgJsonPath, { encoding: 'utf-8' })
   }
 
-  const data = readFileSync(pathAuthVersion, { encoding: 'utf-8' })
-  const updatedData = data.replace(/(pkgVersion:\s*["'])(.*?)(["'])/, `$1${authVersion}$3`);
-  writeFileSync(pathAuthVersion, updatedData)
+  async publish() {
+    const _version = this.version
+    const _pkgPath = this.pkgJsonPath
+    const jsonData = this.jsonData
 
-  await run(`yarn build`, pathAuth)
+    let version = jsonData.version
+    if (_version) {
+      version = _version
+      jsonData.version = _version
+      writeJSONSync(_pkgPath, jsonData, { encoding: 'utf-8', spaces: 2 })
+    }
 
-  const result = await run('npm publish', pathAuth)
-  if (result !== 0) {
-    consola.error(chalk.red('auth publish failed.'))
-    return
+    if (this.pkgVersionPath) {
+      const data = readFileSync(this.pkgVersionPath, { encoding: 'utf-8' })
+      const updatedData = data.replace(/(pkgVersion:\s*["'])(.*?)(["'])/, `$1${version}$3`);
+      writeFileSync(this.pkgVersionPath, updatedData)
+    }
+
+    await run(`yarn build`, this.pkgPath)
+
+    const result = await run('npm publish', this.pkgPath)
+    if (result !== 0) {
+      consola.error(chalk.red(`${this.name} publish failed.`))
+      return
+    }
+    // publish success
+    await this.commitVersionFile(this.name, version)
   }
-  // publish success
-  await commitVersionFile('auth', authVersion)
-}
-
-const publishWallet = async () => {
-  let walletVersion = WalletJsonData.version
-  if (_version) {
-    walletVersion = _version
-    WalletJsonData.version = _version
-    writeJSONSync(pathWalletJson, WalletJsonData, { encoding: 'utf-8', spaces: 2 })
+  private async commitVersionFile(name: string, _v: string) {
+    const msg = `chore: npm pkg(${name}) publish(${_v})`
+    await run(`git add . && git commit -m "${msg}"`, this.pkgPath)
+    await run(`git push origin main`)
+    await sleep(3)
+    await run(`git tag xterio-${name}@${_v}`)
+    await run(`git push origin --tags`)
   }
-
-  const data = readFileSync(pathWalletVersion, { encoding: 'utf-8' })
-  const updatedData = data.replace(/(pkgVersion:\s*["'])(.*?)(["'])/, `$1${walletVersion}$3`);
-  writeFileSync(pathWalletVersion, updatedData)
-
-  await run(`yarn build`, pathWallet)
-
-  const result = await run('npm publish', pathWallet)
-  if (result !== 0) {
-    consola.error(chalk.red('wallet publish failed.'))
-    return
-  }
-  await commitVersionFile('wallet', walletVersion)
-}
-
-const commitVersionFile = async (_f: string, _v: string) => {
-  const path = _f === 'auth' ? pathAuth : pathWallet
-  const msg = `chore: npm pkg(${_f}) publish(${_v})`
-  await run(`git add . && git commit -m "${msg}"`, path)
-  await run(`git push origin main`)
-  await sleep(3)
-  await run(`git tag xterio-${_f}@${_v}`)
-  await run(`git push origin --tags`)
 }
 
 const sleep = (time: number) => {
@@ -85,4 +90,18 @@ const sleep = (time: number) => {
   })
 }
 
-init()
+
+const main = async () => {
+  const _name = process.argv[2]
+  const _version = process.argv[3]
+  consola.info('pkg_name=', chalk.blue(_name), _version)
+
+  if (!_name || _name === PackageEnum.auth) {
+    await new PkgPublish(PackageEnum.auth, _version).publish()
+  }
+  if (!_name || _name === PackageEnum.wallet) {
+    await new PkgPublish(PackageEnum.wallet, _version).publish()
+  }
+}
+
+main()

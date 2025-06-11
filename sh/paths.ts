@@ -12,3 +12,5 @@ export const pathWallet = resolve(pathRoot, 'xterio-wallet')
 export const pathWalletJson = resolve(pathWallet, 'package.json')
 export const pathWalletVersion = resolve(pathWallet, 'src/common/utils/util.ts')
 
+export const pathUi = resolve(pathRoot, 'xterio-ui')
+export const pathUiJson = resolve(pathUi, 'package.json')
