@@ -24,7 +24,11 @@ jobs:
         run: yarn install
 
       - name: Build Example for Web
-        run: yarn deploy:ui
+        run: |
+          cd xterio-ui
+          yarn install
+          yarn build
+          yarn deploy
 
       - name: Deploy Example
         uses: peaceiris/actions-gh-pages@v4

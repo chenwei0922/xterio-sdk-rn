@@ -40,7 +40,7 @@
     "build": "yarn clean && bob build",
     "prepare": "bob build",
     "release": "release-it",
-    "deploy": "yarn install && yarn build && yarn example expo export --platform web"
+    "deploy": "yarn example expo export --platform web"
   },
   "keywords": [
     "react-native",

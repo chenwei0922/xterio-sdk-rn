@@ -10,8 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish:auth": "tsx sh/publish.ts auth",
     "publish:wallet": "tsx sh/publish.ts wallet",
-    "publish:ui": "tsx sh/publish.ts ui",
-    "deploy:ui": "cd xterio-ui && yarn deploy"
+    "publish:ui": "tsx sh/publish.ts ui"
   },
   "author": "",
   "license": "ISC",
