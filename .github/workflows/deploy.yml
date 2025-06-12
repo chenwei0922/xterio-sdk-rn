@@ -1,0 +1,39 @@
+name: Deploy Xterio-Ui Page
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+      - LICENSE
+    paths:
+      - "xterio-ui/**"
+
+jobs:
+  deploy:
+    name: Deploy Page
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23.4.0
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build Example for Web
+        run: yarn deploy:ui
+
+      - name: Deploy Example
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./xterio-ui/example/dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          user_name: ${{ secrets.MY_USER_NAME }}
+          user_email: ${{ secrets.MY_USER_EMAIL }}
+          commit_message: auto deploy example

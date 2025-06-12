@@ -11,6 +11,7 @@ import { StyleSheet, View } from 'react-native';
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { LinearGradientsDef, useGetDireactPoints } from '../base/gradient';
 
+let seed = 1;
 const GradientCard = (props: GradientCardProps) => {
   const {
     style,
@@ -145,19 +146,24 @@ const GradientCard = (props: GradientCardProps) => {
   const directionPoints = useGetDireactPoints(direction);
   const backgroundDirectionPoints = useGetDireactPoints(backgroundDirection);
 
+  const [uid, bgUid, imgUid] = useMemo(() => {
+    seed++;
+    return ['borderGradient' + seed, 'bgGradient' + seed, 'imgPattern' + seed];
+  }, []);
+
   const fillDef = useMemo(() => {
     return img
-      ? 'url(#imagePattern)'
+      ? `url(#${imgUid})`
       : background
-        ? 'url(#myGradient)'
+        ? `url(#${uid})`
         : backgroundColors.length
-          ? 'url(#bgGradient)'
+          ? `url(#${bgUid})`
           : fill;
-  }, [background, backgroundColors.length, fill, img]);
+  }, [background, backgroundColors.length, bgUid, fill, img, imgUid, uid]);
 
   const strokeDef = useMemo(() => {
-    return img || background ? stroke : 'url(#myGradient)';
-  }, [background, img, stroke]);
+    return img || background ? stroke : `url(#${uid})`;
+  }, [background, img, stroke, uid]);
 
   const _ref = useRef<View>(null);
   // ✅ sync layout effect during commit
@@ -190,21 +196,22 @@ const GradientCard = (props: GradientCardProps) => {
       >
         <Defs>
           <LinearGradientsDef
-            id="myGradient"
+            id={uid}
             directionPoints={directionPoints}
             colors={colors}
           />
           <LinearGradientsDef
-            id="bgGradient"
+            id={bgUid}
             directionPoints={backgroundDirectionPoints}
             colors={backgroundColors}
           />
           <Pattern
-            id="imagePattern"
+            id={imgUid}
             x="0"
             y="0"
             width={initWidth}
             height={initHeight}
+            patternUnits="userSpaceOnUse"
           >
             <SImg
               href={img}

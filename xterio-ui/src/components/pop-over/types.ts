@@ -1,5 +1,6 @@
 import type { PropsWithChildren, ReactNode, RefObject } from 'react';
 import type { StyleProp, View, ViewStyle } from 'react-native';
+import type { OverlayProps } from '../overlay/types';
 
 export type PlacementEnum =
   | 'bottom'
@@ -18,7 +19,8 @@ export type MeasureLayout = {
   height: number;
 };
 
-export interface PopOverProps extends PropsWithChildren {
+type PcikOverlayProps = Pick<OverlayProps, 'ModalComponent'>;
+export interface PopOverProps extends PropsWithChildren<PcikOverlayProps> {
   isOpen?: boolean;
   onClose?(): void;
   place?: PlacementEnum;

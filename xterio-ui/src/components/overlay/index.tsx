@@ -29,7 +29,6 @@ const Overlay = (props: OverlayProps) => {
       transparent={true}
       visible={isVisible}
       onRequestClose={onBackdropPress}
-      pointerEvents={'none'}
       {...rest}
     >
       <Pressable
@@ -42,7 +41,6 @@ const Overlay = (props: OverlayProps) => {
       />
       <KeyboardAvoidingView
         style={[styles.container, containerStyle]}
-        pointerEvents={'box-none'}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View

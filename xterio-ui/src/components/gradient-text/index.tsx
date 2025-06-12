@@ -1,7 +1,8 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { GradientTextProp } from './types';
 import {
+  Platform,
   Text as RNText,
   type NativeSyntheticEvent,
   type TextLayoutEventData,
@@ -11,6 +12,7 @@ import Svg, { Defs, Text, TSpan } from 'react-native-svg';
 import styles from './styles';
 import { LinearGradientsDef, useGetDireactPoints } from '../base/gradient';
 
+let seed = 1;
 const GradientText = (props: GradientTextProp) => {
   const {
     fontSize = 14,
@@ -43,7 +45,12 @@ const GradientText = (props: GradientTextProp) => {
   }, []);
 
   const points = useGetDireactPoints(direction);
+  const uid = useMemo(() => {
+    seed++;
+    return 'myGradient' + seed;
+  }, []);
 
+  const isWeb = Platform.OS === 'web';
   return (
     <>
       {show && (
@@ -59,6 +66,11 @@ const GradientText = (props: GradientTextProp) => {
               fontFamily,
             },
           ]}
+          onLayout={() => {
+            if (isWeb) {
+              setShow(false);
+            }
+          }}
           onTextLayout={(e: NativeSyntheticEvent<TextLayoutEventData>) => {
             const lines = e.nativeEvent.lines;
             let size = 10;
@@ -87,13 +99,13 @@ const GradientText = (props: GradientTextProp) => {
       <Svg width={initWidth} height={initHeight}>
         <Defs>
           <LinearGradientsDef
-            id="myGradient"
+            id={uid}
             colors={colors}
             directionPoints={points}
           />
         </Defs>
         <Text
-          fill={'url(#myGradient)'}
+          fill={`url(#${uid})`}
           stroke={'none'}
           x={0}
           y={fontSize}
@@ -102,31 +114,33 @@ const GradientText = (props: GradientTextProp) => {
           fontWeight={fontWeight}
           fontFamily={fontFamily}
         >
-          {lineData.map((it, index) => {
-            let txt = it.text;
-            if (
-              numberOfLines &&
-              index === lineData.length - 1 &&
-              txt.length * charSize > initWidth
-            ) {
-              let end = it.width / charSize;
-              txt = it.text.slice(0, end);
-              txt += '...';
-            }
+          {!isWeb
+            ? lineData.map((it, index) => {
+                let txt = it.text;
+                if (
+                  numberOfLines &&
+                  index === lineData.length - 1 &&
+                  txt.length * charSize > initWidth
+                ) {
+                  let end = it.width / charSize;
+                  txt = it.text.slice(0, end);
+                  txt += '...';
+                }
 
-            return (
-              <TSpan
-                x={it.x}
-                y={it.y + fontSize}
-                fontStyle={fontStyle}
-                fontWeight={fontWeight}
-                fontSize={fontSize}
-                key={index}
-              >
-                {txt}
-              </TSpan>
-            );
-          })}
+                return (
+                  <TSpan
+                    x={it.x}
+                    y={it.y + fontSize}
+                    fontStyle={fontStyle}
+                    fontWeight={fontWeight}
+                    fontSize={fontSize}
+                    key={index}
+                  >
+                    {txt}
+                  </TSpan>
+                );
+              })
+            : text || children}
         </Text>
       </Svg>
     </>
