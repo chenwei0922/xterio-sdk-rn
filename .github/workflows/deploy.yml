@@ -1,10 +1,10 @@
-name: Deploy-Page
+name: Deploy
 on:
   push:
     branches:
       - main
     paths:
-      - "xterio-ui/**/*"
+      - "xterio-ui/**"
 
 jobs:
   deploy:
