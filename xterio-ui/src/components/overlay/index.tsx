@@ -29,12 +29,13 @@ const Overlay = (props: OverlayProps) => {
       transparent={true}
       visible={isVisible}
       onRequestClose={onBackdropPress}
+      pointerEvents={Platform.OS === 'web' ? 'auto' : 'none'}
       {...rest}
     >
       <Pressable
         style={[
           styles.backdrop,
-          { backgroundColor: backdropColor },
+          backdropColor && { backgroundColor: backdropColor },
           backdropStyle,
         ]}
         onPress={!closeOnTouchBackdrop ? undefined : onBackdropPress}

@@ -198,7 +198,7 @@ export default function Demo() {
           place={'top'}
         />
 
-        <Margin gap={10} />
+        <Margin gap={150} />
       </View>
     </ScrollView>
   );

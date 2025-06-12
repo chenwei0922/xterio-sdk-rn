@@ -1,4 +1,11 @@
-import { Text, View, StyleSheet, FlatList, Button } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  Button,
+  Platform,
+} from 'react-native';
 import { useRef, useState } from 'react';
 import '../global.css';
 import * as Demos from './views';
@@ -70,7 +77,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
-    paddingTop: 80,
+    paddingTop: Platform.select({ ios: 40, android: 40, web: 20 }),
   },
   back: {
     height: 60,

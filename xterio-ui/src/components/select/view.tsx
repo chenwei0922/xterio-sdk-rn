@@ -15,7 +15,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import styles from './styles';
-import { IconArrow, IconDirection } from 'xterio-icons';
+import { IconArrow, IconCheckRight } from 'xterio-icons';
 import GradientCard from '../gradient-card';
 
 export const TriggerView = <T extends OptionItem>({
@@ -178,10 +178,8 @@ export const OptionView = <T extends OptionItem>(props: {
         {title}
       </Text>
       {isSheet && active && (
-        <Animated.View
-          style={[styles.triggerIcon, { transform: [{ rotate: '45deg' }] }]}
-        >
-          <IconDirection size={16} color={'#0a116133'} />
+        <Animated.View style={[styles.triggerIcon]}>
+          <IconCheckRight size={16} color={'#0a116133'} />
         </Animated.View>
       )}
     </Pressable>

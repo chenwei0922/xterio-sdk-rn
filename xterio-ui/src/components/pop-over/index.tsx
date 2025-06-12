@@ -24,6 +24,22 @@ const PopOver = (props: PopOverProps) => {
   const [triggerLayout, setTriggerLayout] = useState<MeasureLayout>();
   const [visible, setVisible] = useState(false);
 
+  const updateLayout = useCallback(
+    (callback?: () => void) => {
+      const triggerRef = outsideTriggerRef ?? _triggerRef;
+      triggerRef?.current?.measureInWindow((x, y, width, height) => {
+        // console.log('x', x, y, width, height);
+        setTriggerLayout({ x, y, width, height });
+        callback?.();
+      });
+    },
+    [outsideTriggerRef]
+  );
+  const _triggerRef = useRef<View>(null);
+  useLayoutEffect(() => {
+    updateLayout();
+  }, [updateLayout]);
+
   const show = useCallback(() => setVisible(true), []);
   const hide = useCallback(() => {
     onClose?.();
@@ -33,25 +49,18 @@ const PopOver = (props: PopOverProps) => {
     if (visible) {
       hide();
     } else {
-      show();
+      updateLayout(show);
+      // show();
     }
-  }, [hide, show, visible]);
-
-  const updateLayout = useCallback(() => {
-    const triggerRef = outsideTriggerRef ?? _triggerRef;
-    triggerRef?.current?.measureInWindow((x, y, width, height) => {
-      // console.log('x', x, y, width, height);
-      setTriggerLayout({ x, y, width, height });
-    });
-  }, [outsideTriggerRef]);
-  const _triggerRef = useRef<View>(null);
-  useLayoutEffect(() => {
-    updateLayout();
-  }, [updateLayout]);
+  }, [hide, show, updateLayout, visible]);
 
   useEffect(() => {
-    setVisible(!!isOpen);
-  }, [isOpen]);
+    if (isOpen) {
+      updateLayout(show);
+    } else {
+      setVisible(!!isOpen);
+    }
+  }, [isOpen, show, updateLayout]);
 
   return (
     <>

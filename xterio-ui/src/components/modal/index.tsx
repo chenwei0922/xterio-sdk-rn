@@ -27,6 +27,7 @@ const Modal = (props: ModalProps) => {
     buttonsStyle,
     buttonStyle,
     titleStyle,
+    headerStyle,
     closeStyle,
     ...rest
   } = props;
@@ -40,7 +41,7 @@ const Modal = (props: ModalProps) => {
       {...rest}
     >
       {title && (
-        <View style={[styles.header]}>
+        <View style={[styles.header, headerStyle]}>
           <Text style={[styles.title, titleStyle]}>{title}</Text>
         </View>
       )}

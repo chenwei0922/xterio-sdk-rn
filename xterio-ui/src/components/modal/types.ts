@@ -22,6 +22,7 @@ export interface ModalProps extends PropsWithChildren<OverlayPropsType> {
   btnLoadingSize?: number;
   buttonsStyle?: StyleProp<ViewStyle>;
   buttonStyle?: StyleProp<ViewStyle>;
+  headerStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   closeStyle?: StyleProp<ViewStyle>;
 }
