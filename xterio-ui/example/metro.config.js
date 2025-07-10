@@ -28,6 +28,7 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   // Ensure you call the default resolver.
   return context.resolveRequest(context, moduleName, platform);
 };
+config.resolver.sourceExts = [...(config.resolver?.sourceExts || []), 'md', 'mdx']
 
 const nativeWindConfig = withNativeWind(config, { input: './global.css' });
 

@@ -1,0 +1,31 @@
+---
+title: Markdown page example
+---
+
+# Markdown page example
+
+You don't need React to write simple standalone pages.
+
+export const Highlight = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: color,
+      borderRadius: '20px',
+      color: '#fff',
+      padding: '10px',
+      cursor: 'pointer',
+    }}
+    onClick={() => {
+      alert(`You clicked the color ${color} with label ${children}`);
+    }}>
+    {children}
+  </span>
+);
+
+This is <Highlight color="#25c2a0">Docusaurus green</Highlight> !
+
+import {Demo} from '@site/src/components/Demo.tsx'
+
+this is <Demo />
+
+import {View} from 'react-native'

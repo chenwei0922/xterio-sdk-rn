@@ -20,5 +20,9 @@
     "consola": "^3.4.2",
     "fs-extra": "^11.3.0",
     "tsx": "^4.19.3"
-  }
+  },
+  "workspaces": [
+    "xterio-ui"
+  ],
+  "packageManager": "yarn@4.9.2"
 }
