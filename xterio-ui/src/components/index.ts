@@ -20,3 +20,5 @@ export { default as XTab } from './tab';
 export { default as XCheckbox } from './checkbox';
 export { default as XCollapsible } from './collapsible';
 export { CollapsibleGroup as XCollapsibleGroup } from './collapsible';
+export { default as XScrollNumber } from './scroll-number';
+export { default as XSwiper } from './swiper';
