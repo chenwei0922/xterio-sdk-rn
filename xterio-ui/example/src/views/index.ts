@@ -14,4 +14,3 @@ export { default as XCheckboxDemo } from './XCheckbox';
 export { default as XCollapsibleDemo } from './XCollapsible';
 export { default as XScrollNumberDemo } from './XScrollNumber';
 export { default as XSwiperDemo } from './XSwiper';
-export { default as MDXDemo } from './MDXDemo';
